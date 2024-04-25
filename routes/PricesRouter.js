@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllPrices } = require("../controllers/PriceController");
+const { getAllPrices,update } = require("../controllers/PriceController");
 
 const PriceRouter = express.Router();
 
@@ -8,7 +8,9 @@ const PriceRouter = express.Router();
 // retrieve all prices 
 PriceRouter.get('/', getAllPrices);
 
+// update 
 
+PriceRouter.put("/:id", update)
 
 
 
