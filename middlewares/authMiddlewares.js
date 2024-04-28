@@ -7,7 +7,6 @@ const CustomersClientFioul = require('../models/CustomersClientFioul')
 
 const CustomersClientGranulesDeBois = require("../models/CustomersGranulesDeBois")
 
-const CustomersClientGazElectrecité = require("../models/CustomersGazElectrecite");
 const CustomersClientGazElectrecite = require("../models/CustomersGazElectrecite");
 
 
@@ -27,6 +26,11 @@ const LoginValidator = [
    
 
 ];
+
+//recaptcha.init(process.env.RECAPTCHA_SITE_KEY, process.env.RECAPTCHA_SECRET_KEY);
+
+// Middleware de vérification ReCaptcha
+
 
 
 const authsignCustomer = (req, res, next) => {
@@ -132,4 +136,4 @@ const verifyToken = async (req, res, next) => {
 
 
 
-module.exports = {LoginValidator, authsignCustomer, generatedToken, isCustomer, verifyToken}
+module.exports = {LoginValidator, authsignCustomer, generatedToken, isCustomer, verifyToken,}

@@ -4,6 +4,13 @@ const CustomersGazElectrecite = require("../models/CustomersGazElectrecite.js");
 const jwt = require("jsonwebtoken");
 const { v4 } = require("uuid");
 
+
+const CLIENT_ID_PREFIX = "ASF_CLT_";
+
+const generateClientID = (clientCount) => {
+  return CLIENT_ID_PREFIX + (Number(clientCount) + 1)
+}
+
 // Customer Authentication
 
 const CustomerAuthentication = (req, res) => {
@@ -37,9 +44,14 @@ const CustomerAuthenticationValidation = (req, res, next) => {
 
 // Create new CustomerClientFioul
 
-const createCustomersClientFioul = (req, res, next) => {
+const createCustomersClientFioul = async (req, res, next) => {
   const secretKey = process.env.secret;
-  CustomersClientFioul.create({ ...req.body, id: v4() })
+
+  const countClients = await CustomersClientFioul.countDocuments()
+
+  const id = generateClientID(countClients.toString())
+
+  CustomersClientFioul.create({ ...req.body, id })
     .then((data) => {
       console.log(res._id);
       res.status(201).json({ message: "customer create succufully" });

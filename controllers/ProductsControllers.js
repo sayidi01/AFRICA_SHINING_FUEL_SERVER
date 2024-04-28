@@ -54,7 +54,7 @@ const getProductsById = (req, res) => {
 const updateProducts = (req, res) => {
   const productId = req.params.id;
 
-  Products.updateOne({ _id: productId })
+  Products.updateOne({ _id: productId }, req.body)
     .then((data) => {
       if (data) {
         res.status(200).send({ data });

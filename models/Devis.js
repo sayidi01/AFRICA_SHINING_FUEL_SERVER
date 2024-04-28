@@ -3,7 +3,7 @@ const { model, Schema, Types } = require("mongoose");
 const DevisSchema = new Schema({
   civilité: {
     type: String,
-    enum: ["Mme, Mr"],
+    enum: ["Mme", "Mr"],
     required: true,
   },
   nom: {

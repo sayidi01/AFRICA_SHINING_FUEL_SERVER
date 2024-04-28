@@ -18,6 +18,8 @@ const cors = require("cors");
 
 const morgan = require("morgan");
 
+const rateLimit = require("express-rate-limit");
+
 const customerRouter = require("./routes/CustomersRoutes");
 
 const OrdersRouter = require("./routes/OrdersRouters");
@@ -25,7 +27,10 @@ const OrdersRouter = require("./routes/OrdersRouters");
 const ProductsRouter = require("./routes/ProductsRoutes");
 
 const DevisRouter = require("./routes/DevisRoutes");
+
 const PricesRouter = require("./routes/PricesRouter");
+
+const CandiatureRhRouter = require("./routes/CandidatureRhRoutes")
 
 
 require("dotenv").config();
@@ -53,6 +58,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(limiter);
 
 app.use(
   cors({
@@ -149,6 +155,8 @@ app.use("/products", ProductsRouter);
 
 app.use("/prices", PricesRouter);
 app.use("/devis", DevisRouter);
+
+app.use("/candidatureRH", CandiatureRhRouter);
 
 
 

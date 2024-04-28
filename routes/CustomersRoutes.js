@@ -9,7 +9,7 @@ const {
   verifyToken,
 } = require("../middlewares/authMiddlewares");
 
-const verifEmail = require("../middlewares/emailVerification");
+
 
 const {
   CustomerAuthentication,
