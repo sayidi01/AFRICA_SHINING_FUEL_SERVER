@@ -8,7 +8,7 @@ const CreateDevis = (req, res) => {
     .create({...req.body})
     .then((data) => {
       console.log(data)
-      res.status(201).json({ message: "Votre devis a envoyer", data });      
+      res.status(201).json({ message: "Votre devis  envoyer", data });      
     })
     .catch((err) => {
         console.log("err",err)

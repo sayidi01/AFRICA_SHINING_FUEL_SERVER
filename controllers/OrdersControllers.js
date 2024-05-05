@@ -4,15 +4,16 @@ const OrdersRouter = require("../routes/OrdersRouters");
 // Create new Order
 
 const createOrder = (req, res) => {
-  Orders.create({ ...req.body })
+  Orders.create({...req.body, customer_id: req.user._id})
     .then((data) => {
       console.log(data);
       res.status(201).send({ message: "Commande créée avec succès", data });
     })
     .catch((err) => {
+      console.log(err)
       res
         .status(403)
-        .send({ error: err, message: "vous n'avez pas assez de privilèges" });
+        .send({ error: err, message: err.message || "Failed to create order" });
     });
 };
 
@@ -33,7 +34,9 @@ const getAllOrders = (req, res) => {
 // get order customer connected
 
 const getOrdersCustomerConnected = (req, res) => {
-  const customerID = req.data._id;
+  console.log('req.user', req.user)
+  console.log('req.customer', req.customer)
+  const customerID = req.user._id;
 
   Orders.find({ customer_id: customerID })
     .sort({ order_date: -1 })

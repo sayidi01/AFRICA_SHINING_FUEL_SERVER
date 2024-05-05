@@ -30,7 +30,13 @@ const DevisRouter = require("./routes/DevisRoutes");
 
 const PricesRouter = require("./routes/PricesRouter");
 
-const CandiatureRhRouter = require("./routes/CandidatureRhRoutes")
+const CandiatureRhRouter = require("./routes/CandidatureRhRoutes");
+
+const ContactezNousRouter = require("./routes/ContactezNousRoutes");
+
+const NewsLetterRouter = require("./routes/NewsLetterRoutes");
+
+
 
 
 require("dotenv").config();
@@ -110,7 +116,7 @@ passport.use(
           return done(null, false, { message: "Not Found", status: 401 });
         }
 
-        if (password !== customer?.password) {
+        if (!customer.comparePassword(password)) {
           return done(null, false, { message: "Wrong password", status: 401 });
         }
 
@@ -154,9 +160,14 @@ app.use("/orders",OrdersRouter );
 app.use("/products", ProductsRouter);
 
 app.use("/prices", PricesRouter);
+
 app.use("/devis", DevisRouter);
 
 app.use("/candidatureRH", CandiatureRhRouter);
+
+app.use("/contactezNous", ContactezNousRouter);
+
+app.use("/NewsLetter", NewsLetterRouter);
 
 
 
