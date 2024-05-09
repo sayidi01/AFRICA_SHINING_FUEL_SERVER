@@ -1,4 +1,4 @@
-const {model , Schema} = require("mongoose");
+const {model , Schema, Types} = require("mongoose");
 
 const OrdersSchema = new Schema({
     customer_id: {
@@ -8,7 +8,7 @@ const OrdersSchema = new Schema({
     },
     Products: {
         type: String,
-        ref: 'products',
+      
         required: true
     },
     Quantity: {

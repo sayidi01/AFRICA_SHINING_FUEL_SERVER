@@ -19,7 +19,8 @@ const {
   CustomerAuthenticationValidation,
   Logout,
   UpdateClientFioulPassword,
-  updateDatacCustomer
+  updateDatacCustomer,
+  
 } = require("../controllers/CustomersControllers");
 
 const checkError = require("../middlewares/errorMiddlewares");
@@ -65,5 +66,10 @@ CustomersRouter.delete("/logout",Logout)
 // update data customer 
 
 CustomersRouter.put("/fioul/edit",verifyToken, updateDatacCustomer)
+
+
+
+
+
 
 module.exports = CustomersRouter;

@@ -34,9 +34,10 @@ const CustomerAuthentication = (req, res) => {
 // Customer Validation
 
 const CustomerAuthenticationValidation = (req, res, next) => {
-  const data = { ...req.data?._doc, password: null };
-
+  const data = { ...req.user?._doc, password: null };
+  console.log("req user", req.user)
   console.log("Req customer", req.data);
+  console.log("req")
 
   res.status(200).send({ data });
 };
@@ -148,20 +149,18 @@ const UpdateClientFioulPassword = (req, res) => {
 
 // Logout Customer
 
-const Logout = async (req, res) => {
+const Logout = (req, res) => {
   try {
-    await CustomersClientFioul.deleteOne({ _id: req.user._id });
-    await CustomersGrnulesBois.deleteOne({ _id: req.user._id });
-    await CustomersGazElectrecite.deleteOne({ _id: req.user._id });
-
     // Clear cookies and send response
     res.clearCookie("accesToken").clearCookie("refreshToken");
     res.status(200).json({ message: "Successful disconnection" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Error during logout:", error);
+    res.status(500).json({ message: "Error during logout" });
   }
 };
+
+;
 
 // Update data customer
 
@@ -178,6 +177,8 @@ const updateDatacCustomer = (req, res) => {
     });
 };
 
+
+
 module.exports = {
   CustomerAuthentication,
   createCustomersClientFioul,
@@ -187,4 +188,5 @@ module.exports = {
   Logout,
   UpdateClientFioulPassword,
   updateDatacCustomer,
+  
 };

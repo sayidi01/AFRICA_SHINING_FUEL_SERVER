@@ -1,10 +1,22 @@
 const Orders = require("../models/OrdersSchema");
 const OrdersRouter = require("../routes/OrdersRouters");
 
+
+const CLIENT_ID_PREFIX = "ASF_CLT_";
+
+const generateClientID = (clientCount) => {
+  return CLIENT_ID_PREFIX + (Number(clientCount) + 1);
+};
+
+
 // Create new Order
 
-const createOrder = (req, res) => {
-  Orders.create({...req.body, customer_id: req.user._id})
+const createOrder = async(req, res) => {
+
+  const countClients = await Orders.countDocuments();
+
+  const id = generateClientID(countClients.toString());
+  Orders.create({...req.body, customer_id: req.user._id, id})
     .then((data) => {
       console.log(data);
       res.status(201).send({ message: "Commande créée avec succès", data });
@@ -40,7 +52,6 @@ const getOrdersCustomerConnected = (req, res) => {
 
   Orders.find({ customer_id: customerID })
     .sort({ order_date: -1 })
-    .populate("Products")
     .then((data) => {
       console.log(data);
       res.send({ data });

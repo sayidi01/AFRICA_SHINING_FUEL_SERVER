@@ -31,6 +31,20 @@ const CustomerClientFioulSchema = new Schema(
       required: true,
       enum: ["ClientFioul"],
     },
+    telephone:{
+      type: Number,
+     
+    },
+    adresse:{
+      type: String,
+    },
+    ville: {
+      type: String,
+    },
+    codePostal: {
+      type: Number,
+    }
+   
   },
   { timestamps: true }
 );

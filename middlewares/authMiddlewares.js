@@ -66,7 +66,7 @@ const generatedToken = (req, res, next) => {
     req.accesToken = accesToken;
     req.refreshToken = refreshToken;
 
-    res.cookie("accesToken", accesToken, {
+    res.cookie("accessToken", accesToken, {
       samehttponly: true,
       sameSite: "None",
       secure: true,
@@ -110,7 +110,7 @@ const refreshToken = async (req, res) => {
 
   const newAccessToken = jwt.sign({ _id: customer._id, type: customer.customerType }, secret);
   console.log("newAccessToken", newAccessToken);
-  res.cookie("accesToken", newAccessToken, {
+  res.cookie("accessToken", newAccessToken, {
     samehttponly: true,
     sameSite: "None",
     secure: true,
@@ -155,6 +155,7 @@ const verifyToken = async (req, res, next) => {
       } else {
         throw new Error("Unknown type of user");
       }
+      console.log("customer", customer);
     } catch (error) {
       console.error(error);
       return res.status(401).json({ message: "Invalid token" });
