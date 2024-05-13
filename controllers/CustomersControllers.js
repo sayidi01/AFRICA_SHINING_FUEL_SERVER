@@ -166,10 +166,10 @@ const Logout = (req, res) => {
 
 const updateDatacCustomer = (req, res) => {
   const customerId = req.user._id;
-  CustomersClientFioul.updateOne({ _id: customerId }, req.body)
+  CustomersClientFioul.findOneAndUpdate({ _id: customerId }, req.body, {new: true})
     .then((data) => {
       console.log(data);
-      res.status(200).send({ message: "data updated successfully" });
+      res.status(200).send({ message: "data updated successfully", data });
     })
     .catch((err) => {
       console.log(err);
