@@ -42,7 +42,7 @@ require("dotenv").config();
 
 const PORT = 3000;
 
-const connecting = require("../server/config/db.js");
+const connecting = require("./config/db.js");
 
 const CustomersClientFioul = require("./models/CustomersClientFioul");
 const CustomersClientGranulesBois = require("../server/models/CustomersGranulesDeBois");
