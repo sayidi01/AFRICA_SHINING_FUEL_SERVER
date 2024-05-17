@@ -45,8 +45,8 @@ const PORT = 3000;
 const connecting = require("./config/db.js");
 
 const CustomersClientFioul = require("./models/CustomersClientFioul");
-const CustomersClientGranulesBois = require("../server/models/CustomersGranulesDeBois");
-const CustomersClientGazElectrecite = require("../server/models/CustomersGazElectrecite");
+const CustomersClientGranulesBois = require("./models/CustomersGranulesDeBois");
+const CustomersClientGazElectrecite = require("./models/CustomersGazElectrecite");
 
 connecting
   .then(() => {
