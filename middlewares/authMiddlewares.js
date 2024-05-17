@@ -180,10 +180,28 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
+
+const checkEmailExists = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await CustomersClientFioul.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "Email not found" });
+    }
+
+    req.user = user;
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   LoginValidator,
   authsignCustomer,
   generatedToken,
   isCustomer,
   verifyToken,
+  checkEmailExists
 };

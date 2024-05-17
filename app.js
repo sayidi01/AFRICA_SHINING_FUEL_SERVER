@@ -18,7 +18,6 @@ const cors = require("cors");
 
 const morgan = require("morgan");
 
-const rateLimit = require("express-rate-limit");
 
 const customerRouter = require("./routes/CustomersRoutes");
 
@@ -64,7 +63,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(limiter);
+
 
 app.use(
   cors({
@@ -153,21 +152,21 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use("/customer", customerRouter);
+app.use("/customer",customerRouter);
 
 app.use("/orders",OrdersRouter );
 
-app.use("/products", ProductsRouter);
+app.use("/products",ProductsRouter);
 
-app.use("/prices", PricesRouter);
+app.use("/prices",PricesRouter);
 
-app.use("/devis", DevisRouter);
+app.use("/devis",DevisRouter);
 
-app.use("/candidatureRH", CandiatureRhRouter);
+app.use("/candidatureRH",CandiatureRhRouter);
 
-app.use("/contactezNous", ContactezNousRouter);
+app.use("/contactezNous",ContactezNousRouter);
 
-app.use("/NewsLetter", NewsLetterRouter);
+app.use("/NewsLetter",NewsLetterRouter);
 
 
 

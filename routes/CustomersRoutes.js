@@ -7,8 +7,15 @@ const {
   authsignCustomer,
   generatedToken,
   verifyToken,
+  checkEmailExists
 } = require("../middlewares/authMiddlewares");
 
+
+const checkError = require("../middlewares/errorMiddlewares");
+
+const sendEmail = require("../middlewares/sendEmailCustomer");
+
+const emailVerif = require("../middlewares/emailVerification");
 
 
 const {
@@ -23,8 +30,6 @@ const {
   
 } = require("../controllers/CustomersControllers");
 
-const checkError = require("../middlewares/errorMiddlewares");
-const CustomersClientFioul = require("../models/CustomersClientFioul");
 
 // Customer Authentication
 
@@ -55,20 +60,27 @@ CustomersRouter.post("/clientgazelectrecite", createCustomersGazElectrecite);
 
 // Update Customer Fioul
 
-CustomersRouter.put("/clientFioul/edit/:id", UpdateClientFioulPassword)
+CustomersRouter.put("/clientFioul/edit/:id", UpdateClientFioulPassword);
 
 
 // Logout Customer
 
-CustomersRouter.delete("/logout",Logout)
+CustomersRouter.delete("/logout",Logout);
 
 
 // update data customer 
 
-CustomersRouter.put("/fioul/edit",verifyToken, updateDatacCustomer)
+CustomersRouter.put("/fioul/edit",verifyToken, updateDatacCustomer);
 
 
+// forgot password Customer 
 
+CustomersRouter.post("/forgot-password",checkEmailExists,sendEmail);
+
+
+// GET route pour valider l'e-mail
+
+CustomersRouter.get("/email-validation",emailVerif )
 
 
 
