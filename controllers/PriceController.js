@@ -1,7 +1,5 @@
-const { MongoClient } = require('mongodb');
 const Price = require("../models/PricesSchema");
 const PricePerCity = require('../models/PricesSchema');
-const uri = 'mongodb://localhost:27017/AFRICA_SHINING_FUEL';
 
 const getAllPrices = async (req, res) => {
   try {// dta l
@@ -9,8 +7,6 @@ const getAllPrices = async (req, res) => {
     
     console.log(data);
     res.send({ data });
-
-    client.close();
   } catch (err) {
     console.error('Error connecting to MongoDB:', err);
     res.status(500).send({ message: "Une erreur s'est produite lors de la récupération des prix par ville." });
