@@ -35,7 +35,6 @@ const {
 
 CustomersRouter.post(
   "/login",
-  LoginValidator,
   checkError,
   authsignCustomer,
   generatedToken,
