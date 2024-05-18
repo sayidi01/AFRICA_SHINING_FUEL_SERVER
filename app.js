@@ -67,7 +67,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "http://asf.ma",
+    origin: "https://asf.ma",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // enable credentials (cookies, authorization headers, etc.)
     optionsSuccessStatus: 204,
