@@ -48,11 +48,11 @@ CustomersRouter.post("/login/token",LoginValidator, verifyToken, CustomerAuthent
 
 // Create new CustomerFioul account
 
-CustomersRouter.post("/", LoginValidator,createCustomersClientFioul);
+CustomersRouter.post("/",createCustomersClientFioul);
 
 // Create new Customer Granulés De Bois
 
-CustomersRouter.post("/clientgranulesdebois", LoginValidator,createCustomersGranulesDeBois);
+CustomersRouter.post("/clientgranulesdebois",createCustomersGranulesDeBois);
 
 // Create new Customer gaz && Électrecité
 

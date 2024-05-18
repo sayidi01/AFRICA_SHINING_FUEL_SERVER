@@ -32,6 +32,7 @@ const createOrder = async(req, res) => {
 // get all Orders
 
 const getAllOrders = (req, res) => {
+  
   Orders.find()
     .then((data) => {
       console.log(data);
@@ -111,7 +112,7 @@ const updateOrder = (req, res) => {
 const deleteOrder = (req, res) => {
   const orderId = req.params.id;
 
-  OrdersRouter.deleteOne({ id: orderId })
+  OrdersRouter.delete({ id: orderId })
     .then((data) => {
       console.log(data);
       res.status(200).json({ message: "Commande supprimée avec succès", data });
