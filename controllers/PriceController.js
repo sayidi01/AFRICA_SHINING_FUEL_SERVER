@@ -1,15 +1,12 @@
 const { MongoClient } = require('mongodb');
-const Price = require("../models/PricesSchema")
+const Price = require("../models/PricesSchema");
+const PricePerCity = require('../models/PricesSchema');
 const uri = 'mongodb://localhost:27017/AFRICA_SHINING_FUEL';
 
 const getAllPrices = async (req, res) => {
-  try {
-    const client = await MongoClient.connect(uri);
-
-    const db = client.db('AFRICA_SHINING_FUEL');
-    const collection = db.collection('pricePerCity');
-    const data = await collection.find().toArray();
-
+  try {// dta l
+    const data = await PricePerCity.find();
+    
     console.log(data);
     res.send({ data });
 
