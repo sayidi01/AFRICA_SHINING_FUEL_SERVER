@@ -1,19 +1,22 @@
-const nodemailer = require("nodemailer") ;
+const nodemailer = require("nodemailer");
+
+
 
 const PORT = process.env.PORT || 3000;
+
+// config
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.user,
+    pass: process.env.pass,
+  },
+});
 
 const sendCustomerEmail = (req, res, next) => {
     const token = req.accessToken;
     console.log("Request Body:", req.body);
   
-    // config
-    let transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.user,
-        pass: process.env.pass,
-      },
-    });
   
     // mail options
     const mailOptions = {
@@ -36,4 +39,6 @@ const sendCustomerEmail = (req, res, next) => {
       });
   };
 
-  module.exports = sendCustomerEmail;
+  module.exports = {
+    transporter
+  }

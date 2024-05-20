@@ -18,3 +18,5 @@ const PricePerCitySchema = new Schema({
 const PricePerCity = model('PricePerCity', PricePerCitySchema, 'pricePerCity');
 
 module.exports = PricePerCity;
+
+

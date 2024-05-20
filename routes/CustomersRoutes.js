@@ -72,15 +72,6 @@ CustomersRouter.delete("/logout",Logout);
 CustomersRouter.put("/fioul/edit",verifyToken, updateDatacCustomer);
 
 
-// forgot password Customer 
-
-CustomersRouter.post("/forgot-password",checkEmailExists,sendEmail);
-
-
-// GET route pour valider l'e-mail
-
-CustomersRouter.get("/email-validation",emailVerif )
-
 
 
 module.exports = CustomersRouter;

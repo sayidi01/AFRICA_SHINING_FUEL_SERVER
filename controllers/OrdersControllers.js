@@ -1,6 +1,6 @@
+const { transporter } = require("../middlewares/sendEmailCustomer");
 const Orders = require("../models/OrdersSchema");
 const OrdersRouter = require("../routes/OrdersRouters");
-
 
 const CLIENT_ID_PREFIX = "ASF_CLT_";
 
@@ -8,21 +8,52 @@ const generateClientID = (clientCount) => {
   return CLIENT_ID_PREFIX + (Number(clientCount) + 1);
 };
 
-
 // Create new Order
 
-const createOrder = async(req, res) => {
-
+const createOrder = async (req, res) => {
   const countClients = await Orders.countDocuments();
 
   const id = generateClientID(countClients.toString());
-  Orders.create({...req.body, customer_id: req.user._id, id})
-    .then((data) => {
-      console.log(data);
+  Orders.create({ ...req.body, customer_id: req.user._id, id })
+    .then(async (data) => {
+      const mailOptionsToCustomer = {
+        from: "contact@asf.ma",
+        to: req.user.email,
+        subject: "Confirmation de commande",
+        html: `<b>Hello , this is AFRICA SHINING FUEL </b> <br>
+        
+        Produit: ${req.body.Products}
+        `,
+      };
+      const mailOptionsToBoard = {
+        from: "contact@asf.ma",
+        to: "contact@asf.ma",
+        subject: "Commande reçu",
+        html: `
+        Produit: ${req.body.Products}
+        `,
+      };
+
+      transporter.sendMail(mailOptionsToCustomer, (err, info) => {
+        if (err) {
+          console.log(err);
+        }
+
+        console.log(info);
+      });
+
+      transporter.sendMail(mailOptionsToBoard, (err, info) => {
+        if (err) {
+          console.log(err);
+        }
+
+        console.log(info);
+      });
+
       res.status(201).send({ message: "Commande créée avec succès", data });
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
       res
         .status(403)
         .send({ error: err, message: err.message || "Failed to create order" });
@@ -32,7 +63,6 @@ const createOrder = async(req, res) => {
 // get all Orders
 
 const getAllOrders = (req, res) => {
-  
   Orders.find()
     .then((data) => {
       console.log(data);
@@ -47,8 +77,8 @@ const getAllOrders = (req, res) => {
 // get order customer connected
 
 const getOrdersCustomerConnected = (req, res) => {
-  console.log('req.user', req.user)
-  console.log('req.customer', req.customer)
+  console.log("req.user", req.user);
+  console.log("req.customer", req.customer);
   const customerID = req.user._id;
 
   Orders.find({ customer_id: customerID })
