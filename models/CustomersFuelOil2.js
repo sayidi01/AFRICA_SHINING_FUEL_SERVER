@@ -1,6 +1,6 @@
 const { model, Schema} = require("mongoose");
 
-const CustomerGrnulesDeBoisSchema = new Schema(
+const CustomerFuelOil2Schema = new Schema(
   {
     id: {
       type: String,
@@ -29,13 +29,13 @@ const CustomerGrnulesDeBoisSchema = new Schema(
     customerType: {
       type: String,
       required: true,
-      enum: ["ClientGranulésDeBois"],
+      enum: ["ClientFuelOil2"],
     },
     
   },
   { timestamps: true }
 );
 
-const CustomerGrnulesDeBois = model("CustomerGrnulesDeBois", CustomerGrnulesDeBoisSchema,);
+const CustomerFuelOil2 = model("CustomerFuelOil2",CustomerFuelOil2Schema,);
 
-module.exports = CustomerGrnulesDeBois;
+module.exports = CustomerFuelOil2;

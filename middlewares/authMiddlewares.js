@@ -3,11 +3,11 @@ const passport = require("passport");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
-const CustomersClientFioul = require("../models/CustomersClientFioul");
+const CustomersClientGazoil = require("../models/CustomersClientGazoil");
 
-const CustomersClientGranulesDeBois = require("../models/CustomersGranulesDeBois");
+const CustomersClientFuelOil2 = require("../models/CustomersFuelOil2");
 
-const CustomersClientGazElectrecite = require("../models/CustomersGazElectrecite");
+const CustomersClientBoisChauffage = require("../models/CustomersBoisChauffage.js");
 
 const secretKeyRf = "smkmo99yamudiwehgdbi";
 
@@ -97,12 +97,12 @@ const refreshToken = async (req, res) => {
   const decoded = jwt.verify(token, secretKeyRf);
   let customer;
 
-  if (decoded.type == "ClientFioul") {
-    customer = await CustomersClientFioul.findById(decoded._id);
-  } else if (decoded.type == "ClientGranulésDeBois") {
-    customer = await CustomersClientGranulesDeBois.findById(decoded._id);
-  } else if (decoded.type == "ClientGaz&Èlectrecité") {
-    customer = await CustomersClientGazElectrecite.findById(decoded._id);
+  if (decoded.type == "ClientGazoil") {
+    customer = await CustomersClientGazoil.findById(decoded._id);
+  } else if (decoded.type == "ClientFuelOil2") {
+    customer = await CustomersClientFuelOil2.findById(decoded._id);
+  } else if (decoded.type == "ClientBoisChauffage") {
+    customer = await CustomersClientBoisChauffage.findById(decoded._id);
   } else {
     console.log("Decoded", decoded);
     throw new Error("Unknown type of user");
@@ -146,12 +146,12 @@ const verifyToken = async (req, res, next) => {
     let customer;
 
     try {
-      if (decoded.type == "ClientFioul") {
-        customer = await CustomersClientFioul.findById(decoded._id);
-      } else if (decoded.type == "ClientGranulésDeBois") {
-        customer = await CustomersClientGranulesDeBois.findById(decoded._id);
-      } else if (decoded.type == "ClientGaz&Èlectrecité") {
-        customer = await CustomersClientGazElectrecite.findById(decoded._id);
+      if (decoded.type == "ClientGazoil") {
+        customer = await CustomersClientGazoil.findById(decoded._id);
+      } else if (decoded.type == "ClientFuelOil2") {
+        customer = await CustomersClientFuelOil2.findById(decoded._id);
+      } else if (decoded.type == "ClientBoisChauffage") {
+        customer = await CustomersClientBoisChauffage.findById(decoded._id);
       } else {
         throw new Error("Unknown type of user");
       }
@@ -184,7 +184,7 @@ const verifyToken = async (req, res, next) => {
 const checkEmailExists = async (req, res, next) => {
   try {
     const { email } = req.body;
-    const user = await CustomersClientFioul.findOne({ email });
+    const user = await CustomersClientGazoil.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: "Email not found" });

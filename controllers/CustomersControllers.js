@@ -1,6 +1,6 @@
-const CustomersClientFioul = require("../models/CustomersClientFioul.js");
-const CustomersGrnulesBois = require("../models/CustomersGranulesDeBois.js");
-const CustomersGazElectrecite = require("../models/CustomersGazElectrecite.js");
+const CustomersClientGazoil = require("../models/CustomersClientGazoil");
+const CustomersClientFuelOil2 = require("../models/CustomersFuelOil2.js");
+const CustomersClientBoisChauffage = require("../models/CustomersBoisChauffage.js.js");
 const jwt = require("jsonwebtoken");
 const { v4 } = require("uuid");
 
@@ -42,16 +42,16 @@ const CustomerAuthenticationValidation = (req, res, next) => {
   res.status(200).send({ data });
 };
 
-// Create new CustomerClientFioul
+// Create new CustomerClientGazoil
 
-const createCustomersClientFioul = async (req, res, next) => {
+const createCustomersClientGazoil = async (req, res, next) => {
   const secretKey = process.env.secret;
 
-  const countClients = await CustomersClientFioul.countDocuments();
+  const countClients = await CustomersClientGazoil.countDocuments();
 
   const id = generateClientID(countClients.toString());
 
-  CustomersClientFioul.create({ ...req.body, id })
+  CustomersClientGazoil.create({ ...req.body, id })
     .then((data) => {
       console.log(res._id);
       res.status(201).json({ message: "customer create succufully" });
@@ -68,18 +68,18 @@ const createCustomersClientFioul = async (req, res, next) => {
     });
 };
 
-// Create new Customers granulés Du Bois
+// Create new Customers Fuel Oil n2
 
-const createCustomersGranulesDeBois = async (req, res, next) => {
-  const countClients = await CustomersGrnulesBois.countDocuments();
+const createCustomersClientFuelOil2 = async (req, res, next) => {
+  const countClients = await CustomersClientFuelOil2.countDocuments();
 
   const id = generateClientID(countClients.toString());
-  CustomersGrnulesBois.create({ ...req.body, id })
+  CustomersClientFuelOil2.create({ ...req.body, id })
     .then((data) => {
       console.log(res._id);
       res
         .status(201)
-        .json({ message: "customer Granulés de Bois create succufully" });
+        .json({ message: "customer Fuel Oil 2 create succufully" });
 
       console.log(data);
       req.user = data;
@@ -92,16 +92,16 @@ const createCustomersGranulesDeBois = async (req, res, next) => {
 
 // Create new Customers gaz&& Èlectrecitè
 
-const createCustomersGazElectrecite = async (req, res, next) => {
-  const countClients = await CustomersClientFioul.countDocuments();
+const createCustomersBoisChauffage = async (req, res, next) => {
+  const countClients = await CustomersClientBoisChauffage.countDocuments();
 
   const id = generateClientID(countClients.toString());
-  CustomersGazElectrecite.create({ ...req.body, id })
+  CustomersClientBoisChauffage.create({ ...req.body, id })
     .then((data) => {
       console.log(res._id);
       res
         .status(201)
-        .json({ message: "customer Gaz&Electrecite create succufully" });
+        .json({ message: "customer Bois Chauffage create succufully" });
 
       console.log(data);
       req.user = data;
@@ -112,9 +112,9 @@ const createCustomersGazElectrecite = async (req, res, next) => {
     });
 };
 
-// update password customer Fioul
+// update password customer Gazoil
 
-const UpdateClientFioulPassword = (req, res) => {
+const UpdateClientGazoilPassword = (req, res) => {
   const customerId = req.params.id;
   const currentPassword = req.body.currentPassword;
   const newPassword = req.body.newPassword;
@@ -123,7 +123,7 @@ const UpdateClientFioulPassword = (req, res) => {
     return res.status(400).send({ message: "invalid request" });
   }
 
-  CustomersClientFioul.findById(customerId)
+  CustomersClientGazoil.findById(customerId)
     .then(async (customer) => {
       if (!customer) {
         throw new Error("customer not found");
@@ -166,7 +166,7 @@ const Logout = (req, res) => {
 
 const updateDatacCustomer = (req, res) => {
   const customerId = req.user._id;
-  CustomersClientFioul.findOneAndUpdate({ _id: customerId }, req.body, {new: true})
+  CustomersClientGazoil.findOneAndUpdate({ _id: customerId }, req.body, {new: true})
     .then((data) => {
       console.log(data);
       res.status(200).send({ message: "data updated successfully", data });
@@ -181,12 +181,12 @@ const updateDatacCustomer = (req, res) => {
 
 module.exports = {
   CustomerAuthentication,
-  createCustomersClientFioul,
-  createCustomersGranulesDeBois,
-  createCustomersGazElectrecite,
+  createCustomersClientGazoil,
+  createCustomersClientFuelOil2,
+  createCustomersBoisChauffage,
   CustomerAuthenticationValidation,
   Logout,
-  UpdateClientFioulPassword,
+  UpdateClientGazoilPassword,
   updateDatacCustomer,
   
 };

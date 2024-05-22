@@ -13,19 +13,17 @@ const {
 
 const checkError = require("../middlewares/errorMiddlewares");
 
-const sendEmail = require("../middlewares/sendEmailCustomer");
 
-const emailVerif = require("../middlewares/emailVerification");
 
 
 const {
   CustomerAuthentication,
-  createCustomersClientFioul,
-  createCustomersGranulesDeBois,
-  createCustomersGazElectrecite,
+  createCustomersClientGazoil,
+  createCustomersClientFuelOil2,
+  createCustomersBoisChauffage,
   CustomerAuthenticationValidation,
   Logout,
-  UpdateClientFioulPassword,
+  UpdateClientGazoilPassword,
   updateDatacCustomer,
   
 } = require("../controllers/CustomersControllers");
@@ -45,21 +43,21 @@ CustomersRouter.post(
 
 CustomersRouter.post("/login/token",LoginValidator, verifyToken, CustomerAuthenticationValidation);
 
-// Create new CustomerFioul account
+// Create new CustomerGazoil account
 
-CustomersRouter.post("/",createCustomersClientFioul);
+CustomersRouter.post("/",createCustomersClientGazoil);
 
-// Create new Customer Granulés De Bois
+// Create new Customer Fuel oil n2 
 
-CustomersRouter.post("/clientgranulesdebois",createCustomersGranulesDeBois);
+CustomersRouter.post("/clientFeulOil2",createCustomersClientFuelOil2);
 
-// Create new Customer gaz && Électrecité
+// Create new Customer Bois Chauffage
 
-CustomersRouter.post("/clientgazelectrecite", createCustomersGazElectrecite);
+CustomersRouter.post("/clientBoisChauffage", createCustomersBoisChauffage);
 
-// Update Customer Fioul
+// Update Customer Gazoil
 
-CustomersRouter.put("/clientFioul/edit/:id", UpdateClientFioulPassword);
+CustomersRouter.put("/clientGazoil/edit/:id", UpdateClientGazoilPassword);
 
 
 // Logout Customer
@@ -69,7 +67,7 @@ CustomersRouter.delete("/logout",Logout);
 
 // update data customer 
 
-CustomersRouter.put("/fioul/edit",verifyToken, updateDatacCustomer);
+CustomersRouter.put("/gazoil/edit",verifyToken, updateDatacCustomer);
 
 
 

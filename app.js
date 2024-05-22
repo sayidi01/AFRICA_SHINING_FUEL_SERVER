@@ -44,9 +44,9 @@ const PORT = 3000;
 
 const connecting = require("./config/db.js");
 
-const CustomersClientFioul = require("./models/CustomersClientFioul");
-const CustomersClientGranulesBois = require("./models/CustomersGranulesDeBois");
-const CustomersClientGazElectrecite = require("./models/CustomersGazElectrecite");
+const CustomersClientGazoil = require("./models/CustomersClientGazoil");
+const CustomersClientFuelOil2 = require("./models/CustomersFuelOil2");
+const CustomersClientBoisChauffage = require("./models/CustomersBoisChauffage.js");
 
 const isProd = process.env.NODE_ENV == "PRODUCTION"
 console.log("Environment :", process.env.NODE_ENV)
@@ -107,15 +107,15 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        const customerFioul = await CustomersClientFioul.findOne({ email });
-        const customerGranulesBois = await CustomersClientGranulesBois.findOne({
+        const customerGazoil = await CustomersClientGazoil.findOne({ email });
+        const customerFuelOil2 = await CustomersClientFuelOil2.findOne({
           email,
         });
-        const customerGazElectrecite =
-          await CustomersClientGazElectrecite.findOne({ email });
+        const customerBoisChauffage =
+          await CustomersClientBoisChauffage.findOne({ email });
 
         const customer =
-          customerFioul || customerGranulesBois || customerGazElectrecite;
+          customerGazoil || customerFuelOil2 || customerBoisChauffage;
 
         if (!customer) {
           return done(null, false, { message: "Not Found", status: 401 });
@@ -144,7 +144,7 @@ passport.serializeUser((Customer, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const customer = await CustomersClientFioul.findById(id);
+    const customer = await CustomersClientGazoil.findById(id);
     done(null, customer);
   } catch (err) {
     done(err);

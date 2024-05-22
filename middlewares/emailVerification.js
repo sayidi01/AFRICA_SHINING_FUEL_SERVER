@@ -1,4 +1,4 @@
-const CustomersClientFioul = require("../models/CustomersClientFioul");
+const CustomersClientGazoil = require("../models/CustomersClientGazoil");
 
 require("dotenv").config()
 
@@ -19,7 +19,7 @@ const getemailValidation = (req, res) => {
           status: 422,
         });
       } else {
-        CustomersClientFioul
+        CustomersClientGazoil
           .updateOne({ _id: decoded._id }, { valid_account: true })
           .then((res) => {
             res.status(200).send({ message: "Account got activated" });

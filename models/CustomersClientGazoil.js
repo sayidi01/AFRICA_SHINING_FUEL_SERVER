@@ -1,7 +1,7 @@
 const { model, Schema } = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const CustomerClientFioulSchema = new Schema(
+const CustomersClientGazoilSchema = new Schema(
   {
     id: {
       type: String,
@@ -29,7 +29,7 @@ const CustomerClientFioulSchema = new Schema(
     customerType: {
       type: String,
       required: true,
-      enum: ["ClientFioul"],
+      enum: ["ClientGazoil"],
     },
     telephone:{
       type: Number,
@@ -50,7 +50,7 @@ const CustomerClientFioulSchema = new Schema(
 );
 
 // Pre-save middleware to hash the password before saving
-CustomerClientFioulSchema.pre("save", async function (next) {
+CustomersClientGazoilSchema.pre("save", async function (next) {
   // Hash the password if it's modified or new
   if (!this.isModified("password")) {
     return next();
@@ -66,10 +66,10 @@ CustomerClientFioulSchema.pre("save", async function (next) {
 });
 
 // Method to compare passwords
-CustomerClientFioulSchema.methods.comparePassword = function(candidatePassword) {
+CustomersClientGazoilSchema.methods.comparePassword = function(candidatePassword) {
     return bcrypt.compare(candidatePassword, this.password);
 };
 
-const CustomersClientFioul = model("CustomersClientFioul", CustomerClientFioulSchema);
+const CustomersClientGazoil = model("CustomersClientGazoil",CustomersClientGazoilSchema);
 
-module.exports = CustomersClientFioul;
+module.exports = CustomersClientGazoil;
