@@ -40,9 +40,14 @@ const NewsLetterRouter = require("./routes/NewsLetterRoutes");
 
 require("dotenv").config();
 
+
+// PORT 
 const PORT = 3000;
 
+// Connecting Data Base
+
 const connecting = require("./config/db.js");
+
 
 const CustomersClientGazoil = require("./models/CustomersClientGazoil");
 const CustomersClientFuelOil2 = require("./models/CustomersFuelOil2");
