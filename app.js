@@ -73,7 +73,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const origin = isProd ? "https://asf.ma": "http://localhost:5173"
+const origin =  "https://asf.ma"
 console.log("origin",origin)
 
 app.use(
