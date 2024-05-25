@@ -19,6 +19,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 
+
 const customerRouter = require("./routes/CustomersRoutes");
 
 const OrdersRouter = require("./routes/OrdersRouters");
@@ -73,7 +74,8 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const origin =  "https://asf.ma"
+
+const origin = isProd ? "https://asf.ma": "http://localhost:5173"
 console.log("origin",origin)
 
 app.use(

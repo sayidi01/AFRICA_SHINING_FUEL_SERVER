@@ -16,10 +16,25 @@ const CreateDevis = (req, res) => {
     })
 }
 
+// Get all Devis Customer
+
+const getAllDevis = (req, res) => {
+  Devis
+  .find()
+  .then((data) => {
+    console.log(data)
+    res.send({ data });
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).send({ message: "vous n'avez pas recuperer les devis" });
+  })
+}
 
 
 
 
 
 
-module.exports = {CreateDevis}
+
+module.exports = {CreateDevis, getAllDevis}

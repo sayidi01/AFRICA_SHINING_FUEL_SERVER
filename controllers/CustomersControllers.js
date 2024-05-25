@@ -35,9 +35,9 @@ const CustomerAuthentication = (req, res) => {
 
 const CustomerAuthenticationValidation = (req, res, next) => {
   const data = { ...req.user?._doc, password: null };
-  console.log("req user", req.user)
+  console.log("req user", req.user);
   console.log("Req customer", req.data);
-  console.log("req")
+  console.log("req");
 
   res.status(200).send({ data });
 };
@@ -54,7 +54,7 @@ const createCustomersClientGazoil = async (req, res, next) => {
   CustomersClientGazoil.create({ ...req.body, id })
     .then((data) => {
       console.log(res._id);
-      res.status(201).json({ message: "customer create succufully" });
+      res.status(201).json({ message: "customer create succufully", data });
       //const emailToken = jwt.sign({_id: data._id}, secretKey, {
       // expiresIn: '5m'
       // })
@@ -79,7 +79,7 @@ const createCustomersClientFuelOil2 = async (req, res, next) => {
       console.log(res._id);
       res
         .status(201)
-        .json({ message: "customer Fuel Oil 2 create succufully" });
+        .json({ message: "customer Fuel Oil 2 create succufully", data });
 
       console.log(data);
       req.user = data;
@@ -101,7 +101,7 @@ const createCustomersBoisChauffage = async (req, res, next) => {
       console.log(res._id);
       res
         .status(201)
-        .json({ message: "customer Bois Chauffage create succufully" });
+        .json({ message: "customer Bois Chauffage create succufully", data });
 
       console.log(data);
       req.user = data;
@@ -160,13 +160,14 @@ const Logout = (req, res) => {
   }
 };
 
-;
-
-// Update data customer
+// Update data customer Gasoil
 
 const updateDatacCustomer = (req, res) => {
   const customerId = req.user._id;
-  CustomersClientGazoil.findOneAndUpdate({ _id: customerId }, req.body, {new: true})
+  // req.body: {addressLivraison: {tele}}
+  CustomersClientGazoil.findOneAndUpdate({ _id: customerId }, req.body, {
+    new: true,
+  })
     .then((data) => {
       console.log(data);
       res.status(200).send({ message: "data updated successfully", data });
@@ -177,7 +178,39 @@ const updateDatacCustomer = (req, res) => {
     });
 };
 
+// Update data Customer Fuel oil n 2
 
+const updateDataCustomerFuelOil2 = (req, res) => {
+  const customerId = req.user._id;
+  CustomersClientFuelOil2.findOneAndUpdate({ _id: customerId }, req.body, {
+    new: true,
+  })
+    .then((data) => {
+      console.log(data);
+      res.status(200).send({ message: "data updated successfully", data });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "error update" });
+    });
+};
+
+// update data customer bois chauffage
+
+const updateDataBoisChauffage = (req, res) => {
+  const customerId = req.user._id;
+  CustomersClientBoisChauffage.findOneAndUpdate({ _id: customerId }, req.body, {
+    new: true,
+  })
+    .then((data) => {
+      console.log(data);
+      res.status(200).send({ message: "data updated successfully", data });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "error update" });
+    });
+};
 
 module.exports = {
   CustomerAuthentication,
@@ -188,5 +221,6 @@ module.exports = {
   Logout,
   UpdateClientGazoilPassword,
   updateDatacCustomer,
-  
+  updateDataCustomerFuelOil2,
+  updateDataBoisChauffage,
 };

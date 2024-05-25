@@ -31,11 +31,10 @@ const CustomersClientGazoilSchema = new Schema(
       required: true,
       enum: ["ClientGazoil"],
     },
-    telephone:{
+    telephone: {
       type: Number,
-     
     },
-    adresse:{
+    adresse: {
       type: String,
     },
     ville: {
@@ -43,8 +42,35 @@ const CustomersClientGazoilSchema = new Schema(
     },
     codePostal: {
       type: Number,
-    }
-   
+    },
+    addresseLivraison: {
+      telephone: {
+        type: Number,
+      },
+      adresse: {
+        type: String,
+      },
+      ville: {
+        type: String,
+      },
+      codePostal: {
+        type: Number,
+      },
+    },
+    addresseFacturation: {
+      telephone: {
+        type: Number,
+      },
+      adresse: {
+        type: String,
+      },
+      ville: {
+        type: String,
+      },
+      codePostal: {
+        type: Number,
+      },
+    },
   },
   { timestamps: true }
 );
@@ -66,10 +92,15 @@ CustomersClientGazoilSchema.pre("save", async function (next) {
 });
 
 // Method to compare passwords
-CustomersClientGazoilSchema.methods.comparePassword = function(candidatePassword) {
-    return bcrypt.compare(candidatePassword, this.password);
+CustomersClientGazoilSchema.methods.comparePassword = function (
+  candidatePassword
+) {
+  return bcrypt.compare(candidatePassword, this.password);
 };
 
-const CustomersClientGazoil = model("CustomersClientGazoil",CustomersClientGazoilSchema);
+const CustomersClientGazoil = model(
+  "CustomersClientGazoil",
+  CustomersClientGazoilSchema
+);
 
 module.exports = CustomersClientGazoil;

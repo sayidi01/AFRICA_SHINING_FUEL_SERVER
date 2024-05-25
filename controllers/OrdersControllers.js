@@ -20,17 +20,49 @@ const createOrder = async (req, res) => {
         from: "contact@asf.ma",
         to: req.user.email,
         subject: "Confirmation de commande",
-        html: `<b>Hello , this is AFRICA SHINING FUEL </b> <br>
-        
-        Produit: ${req.body.Products}
-        `,
+        html: ` <div style="font-family: Arial, sans-serif; line-height: 1.5;"> 
+        <b>Cher(ère)   ${req.body.prenom}</b> <br>
+        Votre demande concernant la commande [${req.body.Products}]  a bien été prise en compte.  <br>
+        Vous trouverez ci-dessous le détail des votre articles que vous souhaitez : <br>
+        [${req.body.Quantity} L ${req.body.Products}  de livraison prévue le ${req.body.order_date} ]<br>
+        Total : ${req.body.TotalPrice} DH<br>
+        Type Livraison: ${req.body.deliveryType}<br>
+        Ville: ${req.body.ville}<br>
+        Adresse: ${req.body.adresse}<br>
+        Bien sincèrement,<br>
+
+        Votre équipe Africa Shining Fuel<br>
+
+         Pour toute information complémentaire, vous pouvez nous contacter en utilisant la rubrique « Contact » de notre site ou par téléphone du lundi au vendredi, de 7 h à 20 h, et le<br>
+         samedi de 9 h à 17 h au numéro suivant : 0700 738 084 <br>
+
+          Cordialement<br>
+
+          J.M. Senhaji<br>
+          ASF [Africa Shining Fuel]<br>
+          sales@asf.ma<br>
+         CFC Anfa<br>
+        0 700 738 084<br>
+        <img src="/images/LOGO_AFRICA_SHINING copy.png" alt="Logo" width="200" style="display: block; margin-top: 20px;" />       <div/> `,
       };
       const mailOptionsToBoard = {
         from: "contact@asf.ma",
         to: "contact@asf.ma",
         subject: "Commande reçu",
         html: `
-        Produit: ${req.body.Products}
+        Prenom: ${req.body.prenom}<br>
+        Nom:  ${req.body.nom}<br>
+        Produit: ${req.body.Products}<br>
+        Type Client : ${req.body. customerType}<br> 
+        Quantité: ${req.body.Quantity}<br>
+        Ville: ${req.body.ville}<br>
+        Adresse: ${req.body.adresse}<br>
+        Total: ${req.body.TotalPrice} DH<br>
+        Type Livraison : ${req.body.deliveryType}<br>
+        Code Postal : ${req.body.codePostal}<br>
+        Téléphone: ${req.body.telephone}<br>
+
+        <img src="https://www.asf.ma:2083/cpsess9767495780/frontend/jupiter/filemanager/showfile.html?file=favicon.ico&fileop=&dir=%2Fhome%2Fasfma%2Fpublic_html&dirop=&charset=&file_charset=utf-8&baseurl=&basedir=" alt="Logo" width="200" style="display: block; margin-top: 20px;" />
         `,
       };
 
@@ -142,7 +174,7 @@ const updateOrder = (req, res) => {
 const deleteOrder = (req, res) => {
   const orderId = req.params.id;
 
-  OrdersRouter.delete({ id: orderId })
+  Orders.deleteOne({ _id: orderId })
     .then((data) => {
       console.log(data);
       res.status(200).json({ message: "Commande supprimée avec succès", data });

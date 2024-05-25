@@ -25,7 +25,8 @@ const {
   Logout,
   UpdateClientGazoilPassword,
   updateDatacCustomer,
-  
+  updateDataCustomerFuelOil2,
+  updateDataBoisChauffage
 } = require("../controllers/CustomersControllers");
 
 
@@ -65,10 +66,17 @@ CustomersRouter.put("/clientGazoil/edit/:id", UpdateClientGazoilPassword);
 CustomersRouter.delete("/logout",Logout);
 
 
-// update data customer 
+// update data customer gasoil
 
-CustomersRouter.put("/gazoil/edit",verifyToken, updateDatacCustomer);
+CustomersRouter.put("/ClientGazoil/edit",verifyToken, updateDatacCustomer);
 
+// update data customer Fuel oil n 2
+
+CustomersRouter.put("/ClientFuelOil2/edit", verifyToken, updateDataCustomerFuelOil2);
+
+// update data customer Bois chaufage
+
+CustomersRouter.put("/ClientBoisChauffage/edit", verifyToken,updateDataBoisChauffage);
 
 
 

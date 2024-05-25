@@ -31,7 +31,7 @@ const OrdersSchema = new Schema(
     order_date: {
       type: Date,
       required: true,
-      default: new Date().toString(),
+      default: () => new Date()
     },
     TotalPrice: {
       type: Number,
