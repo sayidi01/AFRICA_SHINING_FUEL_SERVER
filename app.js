@@ -54,7 +54,7 @@ const CustomersClientGazoil = require("./models/CustomersClientGazoil");
 const CustomersClientFuelOil2 = require("./models/CustomersFuelOil2");
 const CustomersClientBoisChauffage = require("./models/CustomersBoisChauffage.js");
 
-const isProd = process.env.NODE_ENV == "PRODUCTION"
+const isProd = process.env.NODE_ENV.toUpperCase() == "PRODUCTION"
 console.log("Environment :", process.env.NODE_ENV)
 console.log("usr and pass", process.env.user, process.env.pass)
 
