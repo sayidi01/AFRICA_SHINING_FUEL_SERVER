@@ -24,7 +24,7 @@ const createOrder = async (req, res) => {
         <b>Cher(ère)   ${req.body.prenom}</b> <br>
         Votre demande concernant la commande [${req.body.Products}]  a bien été prise en compte.  <br>
         Vous trouverez ci-dessous le détail des votre articles que vous souhaitez : <br>
-        [${req.body.Quantity} L ${req.body.Products}  de livraison prévue le ${req.body.order_date} ]<br>
+        [${req.body.Quantity} L ${req.body.Products}  de livraison prévue le ${data.order_date} ]<br>
         Total : ${req.body.TotalPrice} DH<br>
         Type Livraison: ${req.body.deliveryType}<br>
         Ville: ${req.body.ville}<br>
@@ -43,7 +43,7 @@ const createOrder = async (req, res) => {
           sales@asf.ma<br>
          CFC Anfa<br>
         0 700 738 084<br>
-        <img src="/images/LOGO_AFRICA_SHINING copy.png" alt="Logo" width="200" style="display: block; margin-top: 20px;" />       <div/> `,
+        <img src="https://asf.ma/Logo.png" alt="Logo" width="200" style="display: block; margin-top: 20px;" />       <div/> `,
       };
       const mailOptionsToBoard = {
         from: "contact@asf.ma",
@@ -53,7 +53,7 @@ const createOrder = async (req, res) => {
         Prenom: ${req.body.prenom}<br>
         Nom:  ${req.body.nom}<br>
         Produit: ${req.body.Products}<br>
-        Type Client : ${req.body. customerType}<br> 
+        Type Client : ${req.body.customerType}<br> 
         Quantité: ${req.body.Quantity}<br>
         Ville: ${req.body.ville}<br>
         Adresse: ${req.body.adresse}<br>
@@ -62,7 +62,7 @@ const createOrder = async (req, res) => {
         Code Postal : ${req.body.codePostal}<br>
         Téléphone: ${req.body.telephone}<br>
 
-        <img src="https://www.asf.ma:2083/cpsess9767495780/frontend/jupiter/filemanager/showfile.html?file=favicon.ico&fileop=&dir=%2Fhome%2Fasfma%2Fpublic_html&dirop=&charset=&file_charset=utf-8&baseurl=&basedir=" alt="Logo" width="200" style="display: block; margin-top: 20px;" />
+        <img src="https://asf.ma/Logo.png" alt="Logo" width="200" style="display: block; margin-top: 20px;" />
         `,
       };
 
