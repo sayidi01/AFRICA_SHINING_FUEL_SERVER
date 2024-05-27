@@ -31,6 +31,58 @@ const CustomerFuelOil2Schema = new Schema(
       required: true,
       enum: ["ClientFuelOil2"],
     },
+    telephone: {
+      type: Number,
+    },
+    adresse: {
+      type: String,
+    },
+    ville: {
+      type: String,
+    },
+    codePostal: {
+      type: Number,
+    },
+    addresseLivraison: {
+      telephone: {
+        type: Number,
+      },
+      first_name: {
+        type: String,
+      },
+      last_name: {
+        type: String,
+      },
+      adresse: {
+        type: String,
+      },
+      ville: {
+        type: String,
+      },
+      codePostal: {
+        type: Number,
+      },
+    },
+    addresseFacturation: {
+      telephone: {
+        type: Number,
+      },
+      first_name: {
+        type: String,
+      },
+      last_name: {
+        type: String,
+      },
+      adresse: {
+        type: String,
+      },
+      ville: {
+        type: String,
+      },
+      codePostal: {
+        type: Number,
+      },
+    },
     
   },
   { timestamps: true }

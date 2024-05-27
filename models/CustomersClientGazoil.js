@@ -44,6 +44,12 @@ const CustomersClientGazoilSchema = new Schema(
       type: Number,
     },
     addresseLivraison: {
+      first_name: {
+        type: String,
+      },
+      last_name: {
+        type: String,
+      },
       telephone: {
         type: Number,
       },
@@ -60,6 +66,12 @@ const CustomersClientGazoilSchema = new Schema(
     addresseFacturation: {
       telephone: {
         type: Number,
+      },
+      first_name: {
+        type: String,
+      },
+      last_name: {
+        type: String,
       },
       adresse: {
         type: String,
