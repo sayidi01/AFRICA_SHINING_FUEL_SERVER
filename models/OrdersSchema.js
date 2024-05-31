@@ -17,6 +17,7 @@ const OrdersSchema = new Schema(
       required: true,
     },
     customerType: {
+      type: String,
       enum: ["ClientFuelOil2", "ClientBoisChauffage", "ClientGazoil"],
     },
     Products: {

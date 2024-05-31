@@ -6,7 +6,7 @@ const rateLimit = require("express-rate-limit");
 
 const upload = require("../upload/storing");
 
-const { verifyRecaptcha} = require("../middlewares/authMiddlewares")
+const { verifyRecaptcha, verifyToken} = require("../middlewares/authMiddlewares")
 const {
   CreateCandiatureRH,
 } = require("../controllers/CandidatureRhControllers");
@@ -20,6 +20,6 @@ const limiter = rateLimit({
 
 // Create Candidature cv RH
 
-CandidatureRhRouter.post("/", upload.single("cv"), CreateCandiatureRH);
+CandidatureRhRouter.post("/", upload.single("cv"),verifyToken, CreateCandiatureRH);
 
 module.exports = CandidatureRhRouter;

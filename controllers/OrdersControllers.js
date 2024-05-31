@@ -96,6 +96,7 @@ const createOrder = async (req, res) => {
 
 const getAllOrders = (req, res) => {
   Orders.find()
+    //  .populate("customer_id")
     .then((data) => {
       console.log(data);
       res.send({ data });
@@ -185,6 +186,37 @@ const deleteOrder = (req, res) => {
     });
 };
 
+// Serach orders
+
+const searchOrders = (req, res) => {
+  console.log("Hello")
+  const textSearch = req.query.query;
+  const page = Number(req.query.page) ?? 1;
+
+  if (!textSearch) {
+    return res.status(400).json({ error: "Search query is required" });
+  }
+  Orders.find({
+    $or: [
+      { Products: { $regex: textSearch, $options: "i" } },
+      { ville: { $regex: textSearch, $options: "i" } },
+      { prenom: { $regex: textSearch, $options: "i" } },
+      { nom: { $regex: textSearch, $options: "i" } },
+      { adresse: { $regex: textSearch, $options: "i" } },
+      { deliveryType: { $regex: textSearch, $options: "i" } },
+    ],
+  })
+    .skip((page - 1) * 10)
+    .limit(10)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    });
+};
+
 module.exports = {
   createOrder,
   getAllOrders,
@@ -192,4 +224,5 @@ module.exports = {
   getOrderByID,
   updateOrder,
   deleteOrder,
+  searchOrders,
 };

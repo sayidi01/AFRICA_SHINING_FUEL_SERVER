@@ -10,7 +10,8 @@ const {
   getOrdersCustomerConnected,
   getOrderByID,
   updateOrder,
-  deleteOrder
+  deleteOrder,
+  searchOrders
 } = require("../controllers/OrdersControllers");
 
 // Create new Order
@@ -24,6 +25,11 @@ OrdersRouter.get("/", verifyToken, getAllOrders);
 // get order customer connected
 
 OrdersRouter.get("/bycustomer", verifyToken, getOrdersCustomerConnected);
+
+
+// Search Orders Customers 
+
+OrdersRouter.get("/search", searchOrders);
 
 // get order by ID
 

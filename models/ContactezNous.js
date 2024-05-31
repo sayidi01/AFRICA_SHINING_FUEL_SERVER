@@ -20,8 +20,7 @@ const ContactezNousSchema = new Schema({
       },
       email: {
         type: String,
-        required: true,
-        unique: true,
+       
       },
       department: {
         type: String,
