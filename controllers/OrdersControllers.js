@@ -14,7 +14,7 @@ const createOrder = async (req, res) => {
   const countClients = await Orders.countDocuments();
 
   const id = generateClientID(countClients.toString());
-  Orders.create({ ...req.body, customer_id: req.user._id, id })
+  Orders.create({ customerType: req.user.customerType, ...req.body, customer_id: req.user._id, id })
     .then(async (data) => {
       const mailOptionsToCustomer = {
         from: "contact@asf.ma",
@@ -96,7 +96,7 @@ const createOrder = async (req, res) => {
 
 const getAllOrders = (req, res) => {
   Orders.find()
-    //  .populate("customer_id")
+    .populate("customer_id")
     .then((data) => {
       console.log(data);
       res.send({ data });

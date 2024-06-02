@@ -1,4 +1,5 @@
 const {model, Schema} = require("mongoose")
+const bcrypt = require("bcryptjs");
 
 const CustomersClientBoisChauffageSchema = new Schema({
   id: {
@@ -9,16 +10,15 @@ const CustomersClientBoisChauffageSchema = new Schema({
   first_name: {
     type: String,
     required: true,
-    unique: true,
   },
   last_name: {
     type: String,
     required: true,
-    unique: true,
   },
   email: {
     type: String,
     required: true,
+    unique: true
   },
   password: {
     type: String,
@@ -84,6 +84,31 @@ const CustomersClientBoisChauffageSchema = new Schema({
   
   
 },  { timestamps: true })
+
+
+// Pre-save middleware to hash the password before saving
+CustomersClientBoisChauffageSchema.pre("save", async function (next) {
+  // Hash the password if it's modified or new
+  if (!this.isModified("password")) {
+    return next();
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(this.password, 10);
+    this.password = hashedPassword;
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+});
+
+// Method to compare passwords
+CustomersClientBoisChauffageSchema.methods.comparePassword = function (
+  candidatePassword
+) {
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
 
 const CustomersClientBoisChauffage = model("CustomersClientBoisChauffage",CustomersClientBoisChauffageSchema);
 

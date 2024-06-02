@@ -54,7 +54,9 @@ const createCustomersClientGazoil = async (req, res, next) => {
   CustomersClientGazoil.create({ ...req.body, id })
     .then((data) => {
       console.log(res._id);
-      res.status(201).json({ message: "customer create succufully", data });
+      req.user = data;
+      // res.status(201).json({ message: "customer create succufully", data });
+      next()
       //const emailToken = jwt.sign({_id: data._id}, secretKey, {
       // expiresIn: '5m'
       // })
@@ -77,12 +79,10 @@ const createCustomersClientFuelOil2 = async (req, res, next) => {
   CustomersClientFuelOil2.create({ ...req.body, id })
     .then((data) => {
       console.log(res._id);
-      res
-        .status(201)
-        .json({ message: "customer Fuel Oil 2 create succufully", data });
+      req.user = data;
+      next();
 
       console.log(data);
-      req.user = data;
     })
     .catch((err) => {
       console.log("err", err);
@@ -99,12 +99,10 @@ const createCustomersBoisChauffage = async (req, res, next) => {
   CustomersClientBoisChauffage.create({ ...req.body, id })
     .then((data) => {
       console.log(res._id);
-      res
-        .status(201)
-        .json({ message: "customer Bois Chauffage create succufully", data });
+      req.user = data;
+      next();
 
       console.log(data);
-      req.user = data;
     })
     .catch((err) => {
       console.log("err", err);
@@ -147,12 +145,88 @@ const UpdateClientGazoilPassword = (req, res) => {
     });
 };
 
+
+
+// update password customer Fuel Oil n 2
+
+
+const UpdateClientFuelOil2Password = (req, res) => {
+  const customerId = req.params.id;
+  const currentPassword = req.body.currentPassword;
+  const newPassword = req.body.newPassword;
+
+  if (!customerId || !currentPassword || !newPassword) {
+    return res.status(400).send({ message: "invalid request" });
+  }
+
+  CustomersClientFuelOil2.findById(customerId)
+    .then(async (customer) => {
+      if (!customer) {
+        throw new Error("customer not found");
+      }
+
+      // Vérifie que le mot de passe actuel est correct
+      if (!customer.comparePassword(currentPassword)) {
+        throw new Error("invalid current password");
+      }
+
+      // Met à jour le mot de passe du client
+      customer.password = newPassword;
+      await customer.save();
+      res.status(200).send({ message: "password updated successfully" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res
+        .status(500)
+        .send({ message: err.message || "error updating password" });
+    });
+};
+
+
+// update password customer Bois Chauffage
+
+const UpdateClientBoisChauffagePassword = (req, res) => {
+  const customerId = req.params.id;
+  const currentPassword = req.body.currentPassword;
+  const newPassword = req.body.newPassword;
+
+  if (!customerId || !currentPassword || !newPassword) {
+    return res.status(400).send({ message: "invalid request" });
+  }
+
+  CustomersClientBoisChauffage.findById(customerId)
+    .then(async (customer) => {
+      if (!customer) {
+        throw new Error("customer not found");
+      }
+
+      // Vérifie que le mot de passe actuel est correct
+      if (!customer.comparePassword(currentPassword)) {
+        throw new Error("invalid current password");
+      }
+
+      // Met à jour le mot de passe du client
+      customer.password = newPassword;
+      await customer.save();
+      res.status(200).send({ message: "password updated successfully" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res
+        .status(500)
+        .send({ message: err.message || "error updating password" });
+    });
+};
+
+
+
 // Logout Customer
 
 const Logout = (req, res) => {
   try {
     // Clear cookies and send response
-    res.clearCookie("accesToken").clearCookie("refreshToken");
+    res.clearCookie("accesToken").clearCookie("accessToken").clearCookie("refreshToken");
     res.status(200).json({ message: "Successful disconnection" });
   } catch (error) {
     console.error("Error during logout:", error);
@@ -223,4 +297,6 @@ module.exports = {
   updateDatacCustomer,
   updateDataCustomerFuelOil2,
   updateDataBoisChauffage,
+  UpdateClientBoisChauffagePassword,
+  UpdateClientFuelOil2Password
 };
