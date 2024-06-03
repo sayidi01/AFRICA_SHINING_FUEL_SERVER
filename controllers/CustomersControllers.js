@@ -55,12 +55,7 @@ const createCustomersClientGazoil = async (req, res, next) => {
     .then((data) => {
       console.log(res._id);
       req.user = data;
-      // res.status(201).json({ message: "customer create succufully", data });
       next()
-      //const emailToken = jwt.sign({_id: data._id}, secretKey, {
-      // expiresIn: '5m'
-      // })
-      //req.accesToken = emailToken
       console.log(data);
       req.user = data;
     })
@@ -90,7 +85,7 @@ const createCustomersClientFuelOil2 = async (req, res, next) => {
     });
 };
 
-// Create new Customers gaz&& Èlectrecitè
+// Create new Customers Bois Chauffage
 
 const createCustomersBoisChauffage = async (req, res, next) => {
   const countClients = await CustomersClientBoisChauffage.countDocuments();
@@ -286,6 +281,174 @@ const updateDataBoisChauffage = (req, res) => {
     });
 };
 
+
+// Get all customers Gasoil
+
+const GetAllCustomersGasoil = (req,res) => {
+  CustomersClientGazoil
+  .find()
+  .then((data) => {
+    console.log(data)
+    res.send({ data });
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).send({ message: "vous n'avez pas recuperer les clients Gasoil" });
+  })
+}
+
+// Get all Customers Fuel oil n 2
+
+const GetAllCustomersFuelOiln2 = (req,res) => {
+  CustomersClientFuelOil2
+  .find()
+  .then((data) => {
+    console.log(data)
+    res.send({ data });
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).send({ message: "vous n'avez pas recuperer les clients Fuel Oil n 2" });
+  })
+}
+
+// Get ALL Customers Bois Chauffage
+
+const GetAllCustomersBoisChauffage = (req,res) => {
+  CustomersClientBoisChauffage
+  .find()
+  .then((data) => {
+    console.log(data)
+    res.send({ data });
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).send({ message: "vous n'avez pas recuperer les clients Bois Chauffage" });
+  })
+
+}
+
+
+// delete Customer Gasoil
+
+const deleteCustomerGasoil = (req,res) => {
+  const gazoilId = req.params.id
+  CustomersClientGazoil
+  .deleteOne({_id: gazoilId})
+  .then((data) => {
+    console.log(data)
+    res.status(200).json({ message: " Client Gasoil supprimée avec succès", data });
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).send({ status: 500, ...err });
+  })
+}
+
+// delete Customer Fuel oil n 2
+
+const deleteCustomerFuelOil2 = (req,res) => {
+  const fuelId = req.params.id
+  CustomersClientFuelOil2
+  .deleteOne({_id: fuelId})
+  .then((data) => {
+    console.log(data)
+    res.status(200).json({ message: " Client Fuel Oil n 2 supprimée avec succès", data });
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).send({ status: 500, ...err });
+  })
+
+}
+
+// delete Customer Bois Chauffage 
+
+const deleteCustomerBoisChauffage = (req,res) => {
+  const boisChauffageId = req.params.id
+  CustomersClientBoisChauffage
+  .deleteOne({_id: boisChauffageId})
+  .then((data) => {
+    console.log(data)
+    res.status(200).json({ message: " Client Bois Chauffage supprimée avec succès", data });
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).send({ status: 500, ...err });
+  })
+}
+
+// Search Customer Gasoil 
+
+const SearchCustomerGsoil = (req,res) => {
+  const textSearchGasoil = req.query.query
+
+  if (!textSearchGasoil) {
+    return res.status(400).json({ error: "Search query is required" });
+  }
+  CustomersClientGazoil
+  .find({
+    $or: [
+      {first_name: { $regex: textSearchGasoil, $options: "i" } },
+      {last_name: { $regex: textSearchGasoil, $options: "i" } },
+      {email: { $regex: textSearchGasoil, $options: "i" } },
+      {"addresseLivraison.first_name":{ $regex: textSearchGasoil, $options: "i" } },
+      {"addresseLivraison.last_name":{ $regex: textSearchGasoil, $options: "i" } },
+      {"addresseLivraison.adresse":{ $regex: textSearchGasoil, $options: "i" } },
+      {"addresseLivraison.ville":{ $regex: textSearchGasoil, $options: "i" } },
+      {"addresseFacturation.first_name":{ $regex: textSearchGasoil, $options: "i" } },
+      {"addresseFacturation.last_name":{ $regex: textSearchGasoil, $options: "i" } },
+      {"addresseFacturation.adresse":{ $regex: textSearchGasoil, $options: "i" } },
+      {"addresseFacturation.ville":{ $regex: textSearchGasoil, $options: "i" } },
+    ]
+  })
+  .then((data) => {
+    return res.status(200).json(data);
+  })
+  .catch((err) => {
+    console.error(err);
+    return res.status(500).json({ error: "Internal Server Error" });
+  });
+}
+
+// search Customer Fuel Oil n 2
+
+const SearchCustomerFuelOil2 = (req,res) => {
+  const textSearchFuelOil2 = req.query.query
+
+  if (!textSearchFuelOil2) {
+    return res.status(400).json({ error: "Search query is required" });
+  }
+  CustomersClientFuelOil2
+  .find({
+    $or: [
+      {first_name: { $regex: textSearchFuelOil2, $options: "i" } },
+      {last_name: { $regex: textSearchFuelOil2, $options: "i" } },
+      {email: { $regex: textSearchFuelOil2, $options: "i" } },
+      {"addresseLivraison.first_name":{ $regex: textSearchFuelOil2, $options: "i" } },
+      {"addresseLivraison.last_name":{ $regex: textSearchFuelOil2, $options: "i" } },
+      {"addresseLivraison.adresse":{ $regex: textSearchFuelOil2, $options: "i" } },
+      {"addresseLivraison.ville":{ $regex: textSearchFuelOil2, $options: "i" } },
+      {"addresseFacturation.first_name":{ $regex: textSearchFuelOil2, $options: "i" } },
+      {"addresseFacturation.last_name":{ $regex: textSearchFuelOil2, $options: "i" } },
+      {"addresseFacturation.adresse":{ $regex: textSearchFuelOil2, $options: "i" } },
+      {"addresseFacturation.ville":{ $regex: textSearchFuelOil2, $options: "i" } },
+    ]
+  })
+  .then((data) => {
+    return res.status(200).json(data);
+  })
+  .catch((err) => {
+    console.error(err);
+    return res.status(500).json({ error: "Internal Server Error" });
+  });
+}
+
+
+
+
+
+
 module.exports = {
   CustomerAuthentication,
   createCustomersClientGazoil,
@@ -298,5 +461,13 @@ module.exports = {
   updateDataCustomerFuelOil2,
   updateDataBoisChauffage,
   UpdateClientBoisChauffagePassword,
-  UpdateClientFuelOil2Password
+  UpdateClientFuelOil2Password,
+  GetAllCustomersGasoil,
+  GetAllCustomersFuelOiln2,
+  GetAllCustomersBoisChauffage,
+  deleteCustomerBoisChauffage,
+  deleteCustomerFuelOil2,
+  deleteCustomerGasoil,
+  SearchCustomerGsoil,
+  SearchCustomerFuelOil2
 };

@@ -26,7 +26,6 @@ const CustomerFuelOil2Schema = new Schema(
       type: String,
       required: true,
     },
-    
     customerType: {
       type: String,
       required: true,

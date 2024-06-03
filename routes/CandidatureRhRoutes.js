@@ -6,9 +6,9 @@ const rateLimit = require("express-rate-limit");
 
 const upload = require("../upload/storing");
 
-const { verifyRecaptcha, verifyToken} = require("../middlewares/authMiddlewares")
+const { verifyToken} = require("../middlewares/authMiddlewares")
 const {
-  CreateCandiatureRH,
+  CreateCandiatureRH,getAllFormCandidatureRh, SearchFormCandidatureRh, DeleteCandidatureRh
 } = require("../controllers/CandidatureRhControllers");
 
 
@@ -21,5 +21,18 @@ const limiter = rateLimit({
 // Create Candidature cv RH
 
 CandidatureRhRouter.post("/", upload.single("cv"),verifyToken, CreateCandiatureRH);
+
+// get all Form candidature Rh (cv)
+
+CandidatureRhRouter.get("/",getAllFormCandidatureRh)
+
+// Search Form candidature  Rh 
+
+CandidatureRhRouter.get("/search",SearchFormCandidatureRh)
+
+// Delete Form candidature Rh (cv)
+
+CandidatureRhRouter.delete("/:id", DeleteCandidatureRh)
+
 
 module.exports = CandidatureRhRouter;

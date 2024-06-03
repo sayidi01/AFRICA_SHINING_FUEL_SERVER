@@ -106,6 +106,65 @@ const CreateCandiatureRH = async (req, res) => {
 }
 
 
+// Get all form candidature Rh (cv)
+
+const getAllFormCandidatureRh =  (req,res) => {
+  CandidatureRH
+  .find()
+  .then((data) => {
+    console.log(data)
+    res.send({ data });
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).send({ message: "vous n'avez pas recuperer les Forms Candidatures" });
+  })
+}
+
+// Serach Form form candidature Customer Rh (cv)
+
+const SearchFormCandidatureRh = (req,res) => {
+  const textSearchCandidatureRH = req.query.query;
+
+  if (!textSearchCandidatureRH) {
+    return res.status(400).json({ error: "Search query is required" });
+  }
+
+  CandidatureRH
+  .find({
+    $or: [
+      {prenom: { $regex: textSearchCandidatureRH, $options: "i" } },
+      {nom: { $regex:textSearchCandidatureRH, $options: "i" } },
+      {email: { $regex: textSearchCandidatureRH, $options: "i" } },
+      {lettreMotivation:  { $regex: textSearchCandidatureRH, $options: "i" } }
+    ]
+  })
+  .then((data) => {
+    return res.status(200).json(data);
+  })
+  .catch((err) => {
+    console.error(err);
+    return res.status(500).json({ error: "Internal Server Error" });
+  });
+}
+
+
+// Delete Form Candiature RH 
+
+const DeleteCandidatureRh = (req,res) => {
+  const candidatureId = req.params.id
+
+  CandidatureRH
+  .deleteOne({_id: candidatureId})
+  .then((data) => {
+    console.log(data)
+    res.status(200).json({ message: " Form Candidature supprimée avec succès", data });
+  })
+  .catch((err) => {
+    console.log(err)
+    res.status(500).send({ status: 500, ...err });
+  })
+}
 
 
 
@@ -118,4 +177,7 @@ const CreateCandiatureRH = async (req, res) => {
 
 
 
-module.exports ={CreateCandiatureRH}
+
+
+
+module.exports ={CreateCandiatureRH, getAllFormCandidatureRh, SearchFormCandidatureRh, DeleteCandidatureRh}

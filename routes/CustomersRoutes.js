@@ -25,6 +25,14 @@ const {
   updateDataBoisChauffage,
   UpdateClientBoisChauffagePassword,
   UpdateClientFuelOil2Password,
+  GetAllCustomersGasoil,
+  GetAllCustomersFuelOiln2,
+  GetAllCustomersBoisChauffage,
+  deleteCustomerBoisChauffage,
+  deleteCustomerFuelOil2,
+  deleteCustomerGasoil,
+  SearchCustomerGsoil,
+  SearchCustomerFuelOil2
 } = require("../controllers/CustomersControllers");
 
 // Customer Authentication
@@ -79,8 +87,6 @@ CustomersRouter.post(
   }
 );
 
-// Daba had les routes dyal Signup,
-// Khass wra ma t creer l customer, khass generer lih tokens o t7athom fl Cookies kayna function generated token
 
 // modif password  Customer Gazoil
 
@@ -129,5 +135,40 @@ CustomersRouter.put(
   verifyToken,
   updateDataBoisChauffage
 );
+
+// Get All Customers Gasoil
+
+CustomersRouter.get("/ClientGazoil",GetAllCustomersGasoil)
+
+//  Get All Customers Fuel Oil n 2
+
+
+CustomersRouter.get("/ClientFuelOil2", GetAllCustomersFuelOiln2)
+
+
+// Get  All Customers Bois chauffage
+
+CustomersRouter.get("/ClientBoisChauffage", GetAllCustomersBoisChauffage)
+
+// Delete Customer Gasoil 
+
+CustomersRouter.delete("/ClientGazoil/:id", deleteCustomerGasoil)
+
+// Delete Customer Fuel Oil n 2
+
+CustomersRouter.delete("/ClientFuelOil2/:id", deleteCustomerFuelOil2)
+
+// Delete Customer Bois Chauffage 
+
+CustomersRouter.delete("/ClientBoisChauffage/:id", deleteCustomerBoisChauffage)
+
+// Search Customer  Gasoil
+
+CustomersRouter.get("/ClientGazoil/search",SearchCustomerGsoil)
+
+// Search Customer Customer Fuel Oil n 2
+
+CustomersRouter.get("/ClientFuelOil2/search",SearchCustomerFuelOil2)
+
 
 module.exports = CustomersRouter;
