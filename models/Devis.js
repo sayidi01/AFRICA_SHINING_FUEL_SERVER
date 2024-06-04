@@ -6,6 +6,12 @@ const DevisSchema = new Schema({
     enum: ["Mme", "Mr"],
     required: true,
   },
+  TypeDevis: {
+    type: String,
+    enum: ["Devis Gasoil ", "Devis Fuel oil n° 2", "Devis Lubrifiants", "Devis Hydrogène vert", "Devis Citerne", "Devis Borne De Recharge", "Devis Produits De Nettoyage", "Devis Bois Chauffage", "Devis Bitume"],
+    required: true,
+    
+  },
   nom: {
     type: String,
     required: true,

@@ -38,6 +38,8 @@ const CreateDevis = (req, res) => {
         to: "contact@asf.ma",
         subject: "Devis reçu",
         html: `
+        Type Devis : ${req.body.TypeDevis}<br>
+
         civilité: ${req.body.civilité}<br>
         
         Nom: ${req.body.nom}<br>

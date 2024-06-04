@@ -381,8 +381,8 @@ const deleteCustomerBoisChauffage = (req,res) => {
 // Search Customer Gasoil 
 
 const SearchCustomerGsoil = (req,res) => {
-  const textSearchGasoil = req.query.query
-
+  const textSearchGasoil = req.query.query ?? ""
+  const page = req.query.page || 1;
   if (!textSearchGasoil) {
     return res.status(400).json({ error: "Search query is required" });
   }
@@ -402,6 +402,8 @@ const SearchCustomerGsoil = (req,res) => {
       {"addresseFacturation.ville":{ $regex: textSearchGasoil, $options: "i" } },
     ]
   })
+  .skip((page - 1) * 10)
+  .limit(10)
   .then((data) => {
     return res.status(200).json(data);
   })
@@ -414,7 +416,8 @@ const SearchCustomerGsoil = (req,res) => {
 // search Customer Fuel Oil n 2
 
 const SearchCustomerFuelOil2 = (req,res) => {
-  const textSearchFuelOil2 = req.query.query
+  const textSearchFuelOil2 = req.query.query ?? ""
+  const page = req.query.page || 1;
 
   if (!textSearchFuelOil2) {
     return res.status(400).json({ error: "Search query is required" });
@@ -435,6 +438,8 @@ const SearchCustomerFuelOil2 = (req,res) => {
       {"addresseFacturation.ville":{ $regex: textSearchFuelOil2, $options: "i" } },
     ]
   })
+  .skip((page - 1) * 10)
+    .limit(10)
   .then((data) => {
     return res.status(200).json(data);
   })
@@ -442,6 +447,45 @@ const SearchCustomerFuelOil2 = (req,res) => {
     console.error(err);
     return res.status(500).json({ error: "Internal Server Error" });
   });
+}
+
+// Search Customer Bois Chauffage
+
+const SearchCustomerBoisChauffage = (req,res) => {
+  const textSearchBoisChauufage = req.query.query ?? ""
+  const page = req.query.page || 1;
+
+
+  if (!textSearchBoisChauufage) {
+    return res.status(400).json({ error: "Search query is required" });
+  }
+
+  CustomersClientBoisChauffage
+  .find({
+    $or: [
+      {first_name: { $regex: textSearchBoisChauufage, $options: "i" } },
+      {last_name: { $regex: textSearchBoisChauufage, $options: "i" } },
+      {email: { $regex: textSearchBoisChauufage, $options: "i" } },
+      {"addresseLivraison.first_name":{ $regex: textSearchBoisChauufage, $options: "i" } },
+      {"addresseLivraison.last_name":{ $regex: textSearchBoisChauufage, $options: "i" } },
+      {"addresseLivraison.adresse":{ $regex: textSearchBoisChauufage, $options: "i" } },
+      {"addresseLivraison.ville":{ $regex: textSearchBoisChauufage, $options: "i" } },
+      {"addresseFacturation.first_name":{ $regex: textSearchBoisChauufage, $options: "i" } },
+      {"addresseFacturation.last_name":{ $regex: textSearchBoisChauufage, $options: "i" } },
+      {"addresseFacturation.adresse":{ $regex: textSearchBoisChauufage, $options: "i" } },
+      {"addresseFacturation.ville":{ $regex: textSearchBoisChauufage, $options: "i" } },
+    ]
+  })
+  .skip((page - 1) * 10)
+    .limit(10)
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    });
+
 }
 
 
@@ -469,5 +513,6 @@ module.exports = {
   deleteCustomerFuelOil2,
   deleteCustomerGasoil,
   SearchCustomerGsoil,
-  SearchCustomerFuelOil2
+  SearchCustomerFuelOil2,
+  SearchCustomerBoisChauffage
 };

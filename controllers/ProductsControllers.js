@@ -1,6 +1,6 @@
 const Products = require("../models/ProductsSchema");
 
-const ProductsRouter = require("../routes/ProductsRoutes");
+
 
 const { v4 } = require("uuid");
 

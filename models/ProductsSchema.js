@@ -13,18 +13,10 @@ const ProductsSchema =  new Schema ({
         required: true,
         unique: true,
     },
-    description: {
-        type: String,
-        required: true
-    },
     price: {
         type: Number,
         required: true
     },
-    litres: { 
-        type: Number,
-        required: true,
-    }
 
 }, { timestamps: true })
 

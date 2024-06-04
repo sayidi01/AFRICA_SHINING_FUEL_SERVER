@@ -32,7 +32,8 @@ const {
   deleteCustomerFuelOil2,
   deleteCustomerGasoil,
   SearchCustomerGsoil,
-  SearchCustomerFuelOil2
+  SearchCustomerFuelOil2,
+  SearchCustomerBoisChauffage
 } = require("../controllers/CustomersControllers");
 
 // Customer Authentication
@@ -169,6 +170,10 @@ CustomersRouter.get("/ClientGazoil/search",SearchCustomerGsoil)
 // Search Customer Customer Fuel Oil n 2
 
 CustomersRouter.get("/ClientFuelOil2/search",SearchCustomerFuelOil2)
+
+// Search Customer Bois Chauffage 
+
+CustomersRouter.get("/ClientBoisChauffage/search",SearchCustomerBoisChauffage)
 
 
 module.exports = CustomersRouter;
