@@ -9,27 +9,38 @@ const {
   getProducts,
   getProductsById,
   updateProducts,
-  DeleteProduct
+  DeleteProduct,
+  SearchProductASF,
+  EditProductASF
 } = require("../controllers/ProductsControllers");
 
 // Create new Product
 
 ProductsRouter.post("/", verifyToken, CreateProduct);
 
-// get Product
+
+// Search Product ASF 
+
+ProductsRouter.get("/search", SearchProductASF)
+
+// get Product ASF
 
 ProductsRouter.get("/", verifyToken, getProducts);
 
-// get Product by ID
+// get Product ASF by ID
 
 ProductsRouter.get("/:id", verifyToken, getProductsById);
 
-// update Product
 
-ProductsRouter.put("/:id", verifyToken, updateProducts);
-
-// Delete product 
+// Delete product  ASF
 
 ProductsRouter.delete("/:id", verifyToken, DeleteProduct)
+
+// Edit Product ASF
+
+ProductsRouter.put("/:id", verifyToken, EditProductASF)
+
+
+
 
 module.exports = ProductsRouter;

@@ -36,7 +36,7 @@ const ContactezNousRouter = require("./routes/ContactezNousRoutes");
 
 const NewsLetterRouter = require("./routes/NewsLetterRoutes");
 
-
+const UsersRouter = require("./routes/UsersRoutes")
 
 
 require("dotenv").config();
@@ -53,6 +53,9 @@ const connecting = require("./config/db.js");
 const CustomersClientGazoil = require("./models/CustomersClientGazoil");
 const CustomersClientFuelOil2 = require("./models/CustomersFuelOil2");
 const CustomersClientBoisChauffage = require("./models/CustomersBoisChauffage.js");
+const Users = require("./models/Users")
+
+
 
 const isProd = process.env.NODE_ENV.toUpperCase() == "PRODUCTION"
 console.log("Environment :", process.env.NODE_ENV)
@@ -145,6 +148,28 @@ passport.use(
   )
 );
 
+// Local strategy Users 
+
+passport.use(new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password'
+}, async (email, password, done) => {
+  try {
+    const user = await Users.findOne({ email });
+    if (!user) {
+      return done(null, false, { message: 'Invalid email or password' });
+    }
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) {
+      return done(null, false, { message: 'Invalid email or password' });
+    }
+    return done(null, user);
+  } catch (err) {
+    return done(err);
+  }
+}));
+
+
 passport.serializeUser((Customer, done) => {
   done(null, Customer.id);
 });
@@ -181,6 +206,7 @@ app.use("/contactezNous",ContactezNousRouter);
 
 app.use("/NewsLetter",NewsLetterRouter);
 
+app.use("/users", UsersRouter);
 
 
 

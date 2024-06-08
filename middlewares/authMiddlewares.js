@@ -27,9 +27,7 @@ const LoginValidator = [
     ),
 ];
 
-//recaptcha.init(process.env.RECAPTCHA_SITE_KEY, process.env.RECAPTCHA_SECRET_KEY);
 
-// Middleware de vérification ReCaptcha
 
 const authsignCustomer = (req, res, next) => {
   passport.authenticate("only-customer", (err, user, info) => {
@@ -44,6 +42,25 @@ const authsignCustomer = (req, res, next) => {
     } else {
       console.log("passport - info", info);
       return res.status(401).json(info);
+    }
+  })(req, res, next);
+};
+
+
+const authSignUser = (req, res, next) => {
+  passport.authenticate("only-customer", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+
+    // Succ
+    if (user) {
+      req.data = user;
+      req.user = user;
+      return next();
+    } else {
+      // Info
+      next(info);
     }
   })(req, res, next);
 };
@@ -119,15 +136,7 @@ const refreshToken = async (req, res) => {
   req.customer = customer;
 };
 
-const isCustomer = (req, res, next) => {
-  const role = req?.data?.role;
 
-  if (!role) {
-    return next();
-  }
-
-  res.status(403).json({ message: "you don't have enough privilege" });
-};
 
 const verifyToken = async (req, res, next) => {
   const token = req.cookies.accessToken;
@@ -181,27 +190,12 @@ const verifyToken = async (req, res, next) => {
 };
 
 
-const checkEmailExists = async (req, res, next) => {
-  try {
-    const { email } = req.body;
-    const user = await CustomersClientGazoil.findOne({ email });
 
-    if (!user) {
-      return res.status(404).json({ message: "Email not found" });
-    }
-
-    req.user = user;
-    next();
-  } catch (error) {
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
 
 module.exports = {
   LoginValidator,
   authsignCustomer,
   generatedToken,
-  isCustomer,
   verifyToken,
-  checkEmailExists
+  authSignUser
 };

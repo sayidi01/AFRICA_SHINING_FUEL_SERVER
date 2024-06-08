@@ -45,7 +45,6 @@ const CustomerAuthenticationValidation = (req, res, next) => {
 // Create new CustomerClientGazoil
 
 const createCustomersClientGazoil = async (req, res, next) => {
-  const secretKey = process.env.secret;
 
   const countClients = await CustomersClientGazoil.countDocuments();
 

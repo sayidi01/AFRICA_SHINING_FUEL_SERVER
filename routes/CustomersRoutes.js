@@ -7,7 +7,6 @@ const {
   authsignCustomer,
   generatedToken,
   verifyToken,
-  checkEmailExists,
 } = require("../middlewares/authMiddlewares");
 
 const checkError = require("../middlewares/errorMiddlewares");
