@@ -16,17 +16,17 @@ NewsLetterRouter.post("/",verifyToken, CreateNewsLetter);
 
 // get all email NewsLetter 
 
-NewsLetterRouter.get("/", getallEmailNewsLetter)
+NewsLetterRouter.get("/",verifyToken, getallEmailNewsLetter)
 
 
 // Delete NewsLetter email  Customer
 
-NewsLetterRouter.delete("/:id", deleteNewsLetter)
+NewsLetterRouter.delete("/:id",verifyToken, deleteNewsLetter)
 
 
 // Search  NewsLetter email  Customer
 
-NewsLetterRouter.get("/search", SearchNewsLetter);
+NewsLetterRouter.get("/search",verifyToken, SearchNewsLetter);
 
 
 

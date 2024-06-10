@@ -38,6 +38,18 @@ const CreateUser = async (req,res) => {
     })
 }
 
+const Logout = (req, res) => {
+    try {
+      // Clear cookies and send response
+      res.clearCookie("accesToken").clearCookie("accessToken").clearCookie("refreshToken");
+      res.status(200).json({ message: "Successful disconnection" });
+    } catch (error) {
+      console.error("Error during logout:", error);
+      res.status(500).json({ message: "Error during logout" });
+    }
+  };
+
+
 
 // Get all Users ASF
 
@@ -114,4 +126,9 @@ const EditDataUserASF = (req,res) => {
     })
 }
 
-module.exports = {CreateUser, GetAllUsersASF, searchUserASF, DeleteUserASF, EditDataUserASF, authentication}
+
+// Logout User ASF 
+
+
+
+module.exports = {CreateUser, GetAllUsersASF, searchUserASF, DeleteUserASF, EditDataUserASF, authentication, Logout}

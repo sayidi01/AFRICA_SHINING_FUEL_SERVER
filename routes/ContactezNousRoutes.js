@@ -17,16 +17,16 @@ ContactezNousRouter.post("/",verifyToken, CreateFormContactezNous);
 // GET all Forms ContactezNous
 
 
-ContactezNousRouter.get("/", GetAllFormsContactezNous);
+ContactezNousRouter.get("/",verifyToken, GetAllFormsContactezNous);
 
 
 // Delete Form  ContactezNous 
 
-ContactezNousRouter.delete("/:id", deleteFormContactezNous);
+ContactezNousRouter.delete("/:id",verifyToken, deleteFormContactezNous);
 
 // Search Form  ContactezNous
 
-ContactezNousRouter.get("/search", SearchFormContactezNous);
+ContactezNousRouter.get("/search",verifyToken, SearchFormContactezNous);
 
 
 

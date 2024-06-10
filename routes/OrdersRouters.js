@@ -29,7 +29,7 @@ OrdersRouter.get("/bycustomer", verifyToken, getOrdersCustomerConnected);
 
 // Search Orders Customers 
 
-OrdersRouter.get("/search", searchOrders);
+OrdersRouter.get("/search",verifyToken, searchOrders);
 
 // get order by ID
 

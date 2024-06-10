@@ -8,7 +8,7 @@ const { verifyToken , LoginValidator, authSignUser, generatedToken} = require(".
   const checkError = require("../middlewares/errorMiddlewares");
   
 
-const {CreateUser, GetAllUsersASF, searchUserASF, DeleteUserASF, EditDataUserASF, authentication} = require("../controllers/UsersControllers");
+const {CreateUser, GetAllUsersASF, searchUserASF, DeleteUserASF, EditDataUserASF, authentication, Logout} = require("../controllers/UsersControllers");
 
 
 
@@ -20,7 +20,12 @@ UsersRouter.post("/login/token", verifyToken, authentication)
 
 // Create New user ASF
 
-UsersRouter.post("/", verifyToken,CreateUser)
+UsersRouter.post("/", verifyToken,CreateUser, generatedToken)
+
+// Logout User ASF
+
+UsersRouter.delete("/logout",Logout)
+
 
 
 // Get All Users ASF 
@@ -38,6 +43,8 @@ UsersRouter.delete("/:id", verifyToken, DeleteUserASF)
 // Edit Data User ASF
 
 UsersRouter.put("/:id", verifyToken, EditDataUserASF)
+
+
 
 
 module.exports = UsersRouter

@@ -138,41 +138,41 @@ CustomersRouter.put(
 
 // Get All Customers Gasoil
 
-CustomersRouter.get("/ClientGazoil",GetAllCustomersGasoil)
+CustomersRouter.get("/ClientGazoil",verifyToken,GetAllCustomersGasoil)
 
 //  Get All Customers Fuel Oil n 2
 
 
-CustomersRouter.get("/ClientFuelOil2", GetAllCustomersFuelOiln2)
+CustomersRouter.get("/ClientFuelOil2", verifyToken,GetAllCustomersFuelOiln2)
 
 
 // Get  All Customers Bois chauffage
 
-CustomersRouter.get("/ClientBoisChauffage", GetAllCustomersBoisChauffage)
+CustomersRouter.get("/ClientBoisChauffage",verifyToken, GetAllCustomersBoisChauffage)
 
 // Delete Customer Gasoil 
 
-CustomersRouter.delete("/ClientGazoil/:id", deleteCustomerGasoil)
+CustomersRouter.delete("/ClientGazoil/:id", verifyToken,deleteCustomerGasoil)
 
 // Delete Customer Fuel Oil n 2
 
-CustomersRouter.delete("/ClientFuelOil2/:id", deleteCustomerFuelOil2)
+CustomersRouter.delete("/ClientFuelOil2/:id", verifyToken,deleteCustomerFuelOil2)
 
 // Delete Customer Bois Chauffage 
 
-CustomersRouter.delete("/ClientBoisChauffage/:id", deleteCustomerBoisChauffage)
+CustomersRouter.delete("/ClientBoisChauffage/:id",verifyToken, deleteCustomerBoisChauffage)
 
 // Search Customer  Gasoil
 
-CustomersRouter.get("/ClientGazoil/search",SearchCustomerGsoil)
+CustomersRouter.get("/ClientGazoil/search",verifyToken,SearchCustomerGsoil)
 
 // Search Customer Customer Fuel Oil n 2
 
-CustomersRouter.get("/ClientFuelOil2/search",SearchCustomerFuelOil2)
+CustomersRouter.get("/ClientFuelOil2/search",verifyToken,SearchCustomerFuelOil2)
 
 // Search Customer Bois Chauffage 
 
-CustomersRouter.get("/ClientBoisChauffage/search",SearchCustomerBoisChauffage)
+CustomersRouter.get("/ClientBoisChauffage/search",verifyToken,SearchCustomerBoisChauffage)
 
 
 module.exports = CustomersRouter;

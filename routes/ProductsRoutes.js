@@ -21,7 +21,7 @@ ProductsRouter.post("/", verifyToken, CreateProduct);
 
 // Search Product ASF 
 
-ProductsRouter.get("/search", SearchProductASF)
+ProductsRouter.get("/search",verifyToken, SearchProductASF)
 
 // get Product ASF
 

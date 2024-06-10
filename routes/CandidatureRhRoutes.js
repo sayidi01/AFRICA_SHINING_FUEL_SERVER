@@ -24,15 +24,15 @@ CandidatureRhRouter.post("/", upload.single("cv"),verifyToken, CreateCandiatureR
 
 // get all Form candidature Rh (cv)
 
-CandidatureRhRouter.get("/",getAllFormCandidatureRh)
+CandidatureRhRouter.get("/",verifyToken,getAllFormCandidatureRh)
 
 // Search Form candidature  Rh 
 
-CandidatureRhRouter.get("/search",SearchFormCandidatureRh)
+CandidatureRhRouter.get("/search",verifyToken ,SearchFormCandidatureRh)
 
 // Delete Form candidature Rh (cv)
 
-CandidatureRhRouter.delete("/:id", DeleteCandidatureRh)
+CandidatureRhRouter.delete("/:id",verifyToken, DeleteCandidatureRh)
 
 
 module.exports = CandidatureRhRouter;

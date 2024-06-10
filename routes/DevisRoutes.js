@@ -12,16 +12,16 @@ DevisRouter.post("/",verifyToken,CreateDevis);
 
 // Get All Devis Customer 
 
-DevisRouter.get("/",getAllDevis)
+DevisRouter.get("/",verifyToken,getAllDevis)
 
 
 // Search devis customer 
 
-DevisRouter.get("/search",SearchDevis)
+DevisRouter.get("/search",verifyToken,SearchDevis)
 
 // Delete Devis 
 
-DevisRouter.delete("/:id", deleteDevis)
+DevisRouter.delete("/:id",verifyToken, deleteDevis)
 
 
 
