@@ -78,10 +78,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-const origin = {
-  api: isProd ? "https://asf.ma" : "http://localhost:5173",
-  backoffice: isProd ? "https://backoffice.asf.ma" : "http://localhost:5174"
-};
+const origin = isProd ? "https://asf.ma": "http://localhost:5173"
 console.log("origin",origin)
 
 app.use(
