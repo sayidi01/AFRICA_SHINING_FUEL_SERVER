@@ -10,9 +10,9 @@ const generateClientID = (clientCount) => {
 
 
 const authentication = (req, res) => {
-    const data = { ...req.data?._doc, password: null };
+    const data = { ...req.user._doc, password: null };
   
-    console.log("Req user", req.data);
+    console.log("Req user", req.user);
   
     res.status(200).send({ data });
   };

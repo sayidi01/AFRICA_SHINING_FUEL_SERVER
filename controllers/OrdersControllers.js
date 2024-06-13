@@ -13,8 +13,15 @@ const generateClientID = (clientCount) => {
 const createOrder = async (req, res) => {
   const countClients = await Orders.countDocuments();
 
+  console.log("ORDERS - CREATE - req.user", req.user)
+
   const id = generateClientID(countClients.toString());
-  Orders.create({ customerType: req.user.customerType, ...req.body, customer_id: req.user._id, id })
+  Orders.create({
+    customerType: req.user.customerType,
+    ...req.body,
+    customer_id: req.user._id,
+    id,
+  })
     .then(async (data) => {
       const mailOptionsToCustomer = {
         from: "contact@asf.ma",
@@ -189,7 +196,7 @@ const deleteOrder = (req, res) => {
 // Serach orders
 
 const searchOrders = (req, res) => {
-  console.log("Hello")
+  console.log("Hello");
   const textSearch = req.query.query;
   const page = Number(req.query.page) ?? 1;
 

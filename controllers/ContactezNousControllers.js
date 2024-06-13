@@ -1,16 +1,14 @@
-
-const ContactezNous = require("../models/ContactezNous")
+const ContactezNous = require("../models/ContactezNous");
 const { transporter } = require("../middlewares/sendEmailCustomer");
 
 // cretae Form contaztez-nous
 
 const CreateFormContactezNous = (req, res) => {
-    ContactezNous
-    . create({...req.body})
-    .then(async(data) => {
+  ContactezNous.create(req.body)
+    .then(async (data) => {
       const mailOptionsToCustomer = {
         from: "contact@asf.ma",
-        to: req.user.email,
+        to: req.body.email,
         subject: "Confirmation Formulaire Contactez-Nous",
         html: ` <div style="font-family: Arial, sans-serif; line-height: 1.5;"> 
         <b>Cher(ère)   ${req.body.firstName}</b> <br>
@@ -51,7 +49,7 @@ const CreateFormContactezNous = (req, res) => {
 
        Téléphone : ${req.body.phone} <br>
 
-       Email:  ${email} <br>
+       Email:  ${req.body.email} <br>
 
        Departement : ${req.body.department} <br>
 
@@ -78,82 +76,80 @@ const CreateFormContactezNous = (req, res) => {
 
         console.log(info);
       });
-      console.log(data)
-      res.status(201).json({ message: "Votre Formulaire a envoyer", data });      
+      console.log(data);
+      res.status(201).json({ message: "Votre Formulaire a envoyer", data });
     })
     .catch((err) => {
-        console.log("err", err);
-        res.status(400).send({ status: 400, ...err })})
-
-}
-
-
+      console.log("err", err);
+      res.status(400).send({ status: 400, ...err });
+    });
+};
 
 // Get all Forms contaztez-nous
 
-
-const GetAllFormsContactezNous = (req,res) => {
-  ContactezNous
-  .find()
-  .then((data) => {
-    console.log(data)
-    res.send({data})
-  })
-  .catch((err) => {
-    console.log(err)
-    res.status(500).send({ message: "vous n'avez pas assez de privilèges contactez-nous" });
-    
-  })
-}
+const GetAllFormsContactezNous = (req, res) => {
+  ContactezNous.find()
+    .then((data) => {
+      console.log(data);
+      res.send({ data });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({
+        message: "vous n'avez pas assez de privilèges contactez-nous",
+      });
+    });
+};
 
 // DELETE Form contaztez-nous
 
-const deleteFormContactezNous = (req,res) => {
-  const contactId = req.params.id
+const deleteFormContactezNous = (req, res) => {
+  const contactId = req.params.id;
 
-  ContactezNous
-  .deleteOne({_id: contactId})
-  .then((data) => {
-    console.log(data)
-    res.status(200).json({ message: " Form contactez-nous supprimée avec succès", data });
-  })
-  .catch((err) => {
-    console.log(err)
-    res.status(500).send({ status: 500, ...err });
-  })
-}
+  ContactezNous.deleteOne({ _id: contactId })
+    .then((data) => {
+      console.log(data);
+      res
+        .status(200)
+        .json({ message: " Form contactez-nous supprimée avec succès", data });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({ status: 500, ...err });
+    });
+};
 
 // Serach Form  contaztez-nous
 
-const SearchFormContactezNous = (req,res) => {
+const SearchFormContactezNous = (req, res) => {
   const textSearchForm = req.query.query;
 
   if (!textSearchForm) {
     return res.status(400).json({ error: "Search query is required" });
   }
- ContactezNous
-  .find({
-    $or : [
+  ContactezNous.find({
+    $or: [
       { contactType: { $regex: textSearchForm, $options: "i" } },
-      {lastName: { $regex: textSearchForm, $options: "i" } },
-      {firstName: { $regex: textSearchForm, $options: "i" } },
-      {  email: { $regex: textSearchForm, $options: "i" } },
-      {department: { $regex: textSearchForm, $options: "i"}},
-      {subject: { $regex: textSearchForm, $options: "i"}},
-      { message: { $regex: textSearchForm, $options: "i"}},
-    ]
+      { lastName: { $regex: textSearchForm, $options: "i" } },
+      { firstName: { $regex: textSearchForm, $options: "i" } },
+      { email: { $regex: textSearchForm, $options: "i" } },
+      { department: { $regex: textSearchForm, $options: "i" } },
+      { subject: { $regex: textSearchForm, $options: "i" } },
+      { message: { $regex: textSearchForm, $options: "i" } },
+    ],
   })
-  .then((data) => {
-    return res.status(200).json(data);
-  })
-  .catch((err) => {
-    console.error(err);
-    return res.status(500).json({ error: "Internal Server Error" });
-  });
-}
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    });
+};
 
-
-
-
-
-module.exports = {CreateFormContactezNous, GetAllFormsContactezNous, deleteFormContactezNous, SearchFormContactezNous}
+module.exports = {
+  CreateFormContactezNous,
+  GetAllFormsContactezNous,
+  deleteFormContactezNous,
+  SearchFormContactezNous,
+};

@@ -25,7 +25,7 @@ ProductsRouter.get("/search",verifyToken, SearchProductASF)
 
 // get Product ASF
 
-ProductsRouter.get("/", verifyToken, getProducts);
+ProductsRouter.get("/", getProducts);
 
 // get Product ASF by ID
 

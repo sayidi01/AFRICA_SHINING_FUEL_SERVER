@@ -11,7 +11,7 @@ const { verifyToken } = require("../middlewares/authMiddlewares");
 // Create From ContactezNous
 
 
-ContactezNousRouter.post("/",verifyToken, CreateFormContactezNous);
+ContactezNousRouter.post("/", CreateFormContactezNous);
 
 
 // GET all Forms ContactezNous

@@ -18,8 +18,6 @@ const cors = require("cors");
 
 const morgan = require("morgan");
 
-
-
 const customerRouter = require("./routes/CustomersRoutes");
 
 const OrdersRouter = require("./routes/OrdersRouters");
@@ -36,30 +34,25 @@ const ContactezNousRouter = require("./routes/ContactezNousRoutes");
 
 const NewsLetterRouter = require("./routes/NewsLetterRoutes");
 
-const UsersRouter = require("./routes/UsersRoutes")
-
+const UsersRouter = require("./routes/UsersRoutes");
 
 require("dotenv").config();
 
-
-// PORT 
+// PORT
 const PORT = 3000;
 
 // Connecting Data Base
 
 const connecting = require("./config/db.js");
 
-
 const CustomersClientGazoil = require("./models/CustomersClientGazoil");
 const CustomersClientFuelOil2 = require("./models/CustomersFuelOil2");
 const CustomersClientBoisChauffage = require("./models/CustomersBoisChauffage.js");
-const Users = require("./models/Users")
+const Users = require("./models/Users");
 
-
-
-const isProd = process.env.NODE_ENV.toUpperCase() == "PRODUCTION"
-console.log("Environment :", process.env.NODE_ENV)
-console.log("usr and pass", process.env.user, process.env.pass)
+const isProd = process.env.NODE_ENV.toUpperCase() == "PRODUCTION";
+console.log("Environment :", process.env.NODE_ENV);
+console.log("usr and pass", process.env.user, process.env.pass);
 
 connecting
   .then(() => {
@@ -77,13 +70,14 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-const origin = isProd ? "https://asf.ma": "http://localhost:5173"
-console.log("origin",origin)
+const origin = isProd
+  ? ["https://asf.ma", "https://backoffice.asf.ma"]
+  : ["http://localhost:5173", "http://localhost:5174"];
+console.log("origin", origin);
 
 app.use(
   cors({
-    origin,
+    origin: origin,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // enable credentials (cookies, authorization headers, etc.)
     optionsSuccessStatus: 204,
@@ -148,27 +142,31 @@ passport.use(
   )
 );
 
-// Local strategy Users 
+// Local strategy Users
 
-passport.use(new LocalStrategy({
-  usernameField: 'email',
-  passwordField: 'password'
-}, async (email, password, done) => {
-  try {
-    const user = await Users.findOne({ email });
-    if (!user) {
-      return done(null, false, { message: 'Invalid email or password' });
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+    },
+    async (email, password, done) => {
+      try {
+        const user = await Users.findOne({ email });
+        if (!user) {
+          return done(null, false, { message: "Invalid email or password" });
+        }
+        const isValid = await bcrypt.compare(password, user.password);
+        if (!isValid) {
+          return done(null, false, { message: "Invalid email or password" });
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
     }
-    const isValid = await bcrypt.compare(password, user.password);
-    if (!isValid) {
-      return done(null, false, { message: 'Invalid email or password' });
-    }
-    return done(null, user);
-  } catch (err) {
-    return done(err);
-  }
-}));
-
+  )
+);
 
 passport.serializeUser((Customer, done) => {
   done(null, Customer.id);
@@ -190,25 +188,23 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use("/customer",customerRouter);
+app.use("/customer", customerRouter);
 
-app.use("/orders",OrdersRouter );
+app.use("/orders", OrdersRouter);
 
-app.use("/products",ProductsRouter);
+app.use("/products", ProductsRouter);
 
-app.use("/prices",PricesRouter);
+app.use("/prices", PricesRouter);
 
-app.use("/devis",DevisRouter);
+app.use("/devis", DevisRouter);
 
-app.use("/candidatureRH",CandiatureRhRouter);
+app.use("/candidatureRH", CandiatureRhRouter);
 
-app.use("/contactezNous",ContactezNousRouter);
+app.use("/contactezNous", ContactezNousRouter);
 
-app.use("/NewsLetter",NewsLetterRouter);
+app.use("/NewsLetter", NewsLetterRouter);
 
 app.use("/users", UsersRouter);
-
-
 
 app.use((err, req, res, next) => {
   console.log("something went wrong", err);
@@ -220,5 +216,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => console.log("listening one the PORT: ", PORT));
 
 module.exports = {
-  isProd
-}
+  isProd,
+};
