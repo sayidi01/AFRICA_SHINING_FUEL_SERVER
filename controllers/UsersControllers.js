@@ -66,6 +66,22 @@ const GetAllUsersASF = (req,res) => {
     })
 }
 
+// Get User ASF Connected 
+
+const GetUserConnectedNow = (req,res) => {
+    const userID = req.user._id;
+    Users
+    .findOne({user_id :userID})
+    .then((data) => {
+        console.log(data)
+        res.send({data})
+    })
+    .catch((err) => {
+        console.log(err)
+        res.status(500).send({ message: "vous n'avez pas recuperer User connectè maintenant" });
+    })
+}
+
 
 // Serach User ASF 
 
@@ -131,4 +147,4 @@ const EditDataUserASF = (req,res) => {
 
 
 
-module.exports = {CreateUser, GetAllUsersASF, searchUserASF, DeleteUserASF, EditDataUserASF, authentication, Logout}
+module.exports = {CreateUser, GetAllUsersASF, searchUserASF, DeleteUserASF, EditDataUserASF, authentication, Logout, GetUserConnectedNow}

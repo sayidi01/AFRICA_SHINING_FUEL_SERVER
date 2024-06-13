@@ -51,7 +51,7 @@ const CreateFormContactezNous = (req, res) => {
 
        Téléphone : ${req.body.phone} <br>
 
-       Email:  ${req.body.email} <br>
+       Email:  ${email} <br>
 
        Departement : ${req.body.department} <br>
 

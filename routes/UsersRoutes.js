@@ -8,7 +8,7 @@ const { verifyToken , LoginValidator, authSignUser, generatedToken} = require(".
   const checkError = require("../middlewares/errorMiddlewares");
   
 
-const {CreateUser, GetAllUsersASF, searchUserASF, DeleteUserASF, EditDataUserASF, authentication, Logout} = require("../controllers/UsersControllers");
+const {CreateUser, GetAllUsersASF, searchUserASF, DeleteUserASF, EditDataUserASF, authentication, Logout, GetUserConnectedNow} = require("../controllers/UsersControllers");
 
 
 
@@ -31,6 +31,11 @@ UsersRouter.delete("/logout",Logout)
 // Get All Users ASF 
 
 UsersRouter.get("/", verifyToken,GetAllUsersASF )
+
+// Get user Connected now
+
+
+UsersRouter.get("/byuser", verifyToken,GetUserConnectedNow )
 
 // Serach User ASF
 

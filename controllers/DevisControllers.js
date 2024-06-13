@@ -10,7 +10,7 @@ const CreateDevis = (req, res) => {
         to: req.user.email,
         subject: "Confirmation Devis",
         html: ` <div style="font-family: Arial, sans-serif; line-height: 1.5;"> 
-        <b>Cher(ère)   ${req.body.prenom}</b> <br>
+        <b>Cher(ère)   ${req.body.prenom}  ${req.body.nom} </b> <br>
         
         Nous vous remercions d'avoir pris contact avec Africa Shining Fuel et d'avoir rempli notre formulaire de demande de devis.<br>
 

@@ -53,7 +53,7 @@ const createOrder = async (req, res) => {
         Prenom: ${req.body.prenom}<br>
         Nom:  ${req.body.nom}<br>
         Produit: ${req.body.Products}<br>
-        Type Client : ${req.body.customerType}<br> 
+        Type Client : ${req.user.customerType}<br> 
         Quantité: ${req.body.Quantity}<br>
         Ville: ${req.body.ville}<br>
         Adresse: ${req.body.adresse}<br>
