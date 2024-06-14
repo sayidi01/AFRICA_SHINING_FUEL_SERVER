@@ -9,6 +9,8 @@ const CustomersClientFuelOil2 = require("../models/CustomersFuelOil2");
 
 const CustomersClientBoisChauffage = require("../models/CustomersBoisChauffage.js");
 
+const Users = require("../controllers/UsersControllers")
+
 const secretKeyRf = "smkmo99yamudiwehgdbi";
 
 const LoginValidator = [
@@ -101,6 +103,45 @@ const generatedToken = (req, res, next) => {
   }
 };
 
+
+// Generated Token User ASF 
+
+const generatedTokenUserBackoffice = (req, res, next) => {
+  if (req.user) {
+    console.log("token data user", req.user);
+    const accesTokenBackoffice = jwt.sign(
+      { _id: req.user._doc._id, type: req.user._doc.customerType },
+      process.env.secret,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    const refreshTokenBackoffice = jwt.sign({ _id: req.user._doc._id, type: req.user._doc.customerType }, secretKeyRf, {
+      expiresIn: "1d",
+    });
+
+    req.accesTokenBackoffice = accesTokenBackoffice;
+    req.refreshTokenBackoffice = refreshTokenBackoffice;
+
+    res.cookie("accessTokenBackoffice", accesTokenBackoffice, {
+      samehttponly: true,
+      sameSite: "None",
+      secure: true,
+    });
+
+    res.cookie("refreshTokenBackoffice", refreshTokenBackoffice, {
+      sameSite: true,
+      sameSite: "None",
+      secure: true,
+    });
+
+    next();
+  } else {
+    next({ message: "Something went wrong while generating tokens" });
+  }
+};
+
 const refreshToken = async (req, res) => {
   const token = req.cookies.refreshToken;
   if (!token)
@@ -137,7 +178,7 @@ const refreshToken = async (req, res) => {
 };
 
 
-
+// Verify Token Customer 
 const verifyToken = async (req, res, next) => {
   const token = req.cookies.accessToken;
   console.log("req.cookies", req.cookies);
@@ -190,6 +231,48 @@ const verifyToken = async (req, res, next) => {
 };
 
 
+// Verify Toekn User ASF backoffice
+
+const verifyTokenBackoffice = async (req, res, next) => {
+  const token = req.cookies.accessTokenBackoffice;
+  console.log("req.cookies", req.cookies);
+
+  if (!token) {
+    return res.status(401).json({ message: "No token user provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.secret);
+
+    // Decoded -- {_id: ""}
+    console.log("Decoded --", decoded);
+
+    let user;
+
+    try {
+      user = await Users.findById(decoded._id);
+      console.log("user", user);
+    } catch (error) {
+      console.error(error);
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    req.user = user;
+    req.currentUser = user;
+
+    next();
+  } catch (error) {
+    console.log("my error", error);
+    try {
+      await refreshTokenBackoffice(req, res);
+      console.log("Yes");
+      next();
+    } catch (error) {
+      console.log("No", error);
+      return res.status(401).json({ message: "Session expired, login again!" });
+    }
+  }
+};
 
 
 module.exports = {
@@ -197,5 +280,7 @@ module.exports = {
   authsignCustomer,
   generatedToken,
   verifyToken,
-  authSignUser
+  authSignUser,
+  generatedTokenUserBackoffice,
+  verifyTokenBackoffice
 };

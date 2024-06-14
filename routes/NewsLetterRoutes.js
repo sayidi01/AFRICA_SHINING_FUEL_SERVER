@@ -11,7 +11,7 @@ const { verifyToken } = require("../middlewares/authMiddlewares");
 // Create NewsLetter email 
 
 
-NewsLetterRouter.post("/",verifyToken, CreateNewsLetter);
+NewsLetterRouter.post("/", CreateNewsLetter);
 
 
 // get all email NewsLetter 

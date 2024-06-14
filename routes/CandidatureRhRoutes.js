@@ -20,7 +20,7 @@ const limiter = rateLimit({
 
 // Create Candidature cv RH
 
-CandidatureRhRouter.post("/", upload.single("cv"),verifyToken, CreateCandiatureRH);
+CandidatureRhRouter.post("/", upload.single("cv"), CreateCandiatureRH);
 
 // get all Form candidature Rh (cv)
 

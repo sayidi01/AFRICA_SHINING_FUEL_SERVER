@@ -7,7 +7,7 @@ const { verifyToken } = require("../middlewares/authMiddlewares");
 
 // Create Devis Customer
 
-DevisRouter.post("/",verifyToken,CreateDevis);
+DevisRouter.post("/",CreateDevis);
 
 
 // Get All Devis Customer 

@@ -2,7 +2,7 @@ const { Router } = require("express");
 
 const UsersRouter = Router();
 
-const { verifyToken , LoginValidator, authSignUser, generatedToken} = require("../middlewares/authMiddlewares");
+const { verifyToken , LoginValidator, authSignUser, generatedTokenUserBackoffice, verifyTokenBackoffice} = require("../middlewares/authMiddlewares");
 
   
   const checkError = require("../middlewares/errorMiddlewares");
@@ -12,15 +12,15 @@ const {CreateUser, GetAllUsersASF, searchUserASF, DeleteUserASF, EditDataUserASF
 
 
 
-UsersRouter.post("/login",LoginValidator, checkError, authSignUser, generatedToken, authentication)
+UsersRouter.post("/login",LoginValidator, checkError, authSignUser, generatedTokenUserBackoffice, authentication)
 
 
-UsersRouter.post("/login/token", verifyToken, authentication)
+UsersRouter.post("/login/token", verifyTokenBackoffice, authentication)
 
 
 // Create New user ASF
 
-UsersRouter.post("/", verifyToken,CreateUser, generatedToken)
+UsersRouter.post("/", verifyTokenBackoffice,CreateUser, generatedTokenUserBackoffice)
 
 // Logout User ASF
 
