@@ -2,7 +2,7 @@ const { Router } = require("express");
 
 const UsersRouter = Router();
 
-const { verifyToken , LoginValidator, authSignUser, generatedTokenUserBackoffice, verifyTokenBackoffice} = require("../middlewares/authMiddlewares");
+const {   LoginValidator, authSignUser, generatedTokenUserBackoffice, verifyTokenBackoffice} = require("../middlewares/authMiddlewares");
 
   
   const checkError = require("../middlewares/errorMiddlewares");
@@ -30,24 +30,24 @@ UsersRouter.delete("/logout",Logout)
 
 // Get All Users ASF 
 
-UsersRouter.get("/", verifyToken,GetAllUsersASF )
+UsersRouter.get("/", verifyTokenBackoffice,GetAllUsersASF )
 
 // Get user Connected now
 
 
-UsersRouter.get("/byuser", verifyToken,GetUserConnectedNow )
+UsersRouter.get("/byuser", verifyTokenBackoffice,GetUserConnectedNow )
 
 // Serach User ASF
 
-UsersRouter.get("/search", verifyToken, searchUserASF)
+UsersRouter.get("/search", verifyTokenBackoffice, searchUserASF)
 
 // Delete  User ASF
 
-UsersRouter.delete("/:id", verifyToken, DeleteUserASF)
+UsersRouter.delete("/:id", verifyTokenBackoffice, DeleteUserASF)
 
 // Edit Data User ASF
 
-UsersRouter.put("/:id", verifyToken, EditDataUserASF)
+UsersRouter.put("/:id", verifyTokenBackoffice, EditDataUserASF)
 
 
 
