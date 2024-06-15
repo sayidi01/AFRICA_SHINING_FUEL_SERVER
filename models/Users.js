@@ -1,5 +1,4 @@
 const {Schema , model } = require('mongoose');
-const bcrypt = require('bcrypt'); 
 
 const UserSchema = new Schema({
     id: {
@@ -27,11 +26,6 @@ const UserSchema = new Schema({
     }
 
 }, { timestamps: true })
-
-
-UserSchema.methods.comparePassword = function(password) {
-    return bcrypt.compareSync(password, this.password);
-  };
 
 const Users = model("users", UserSchema)
 

@@ -6,7 +6,7 @@ const rateLimit = require("express-rate-limit");
 
 const upload = require("../upload/storing");
 
-const { verifyToken} = require("../middlewares/authMiddlewares")
+const { verifyTokenBackoffice} = require("../middlewares/authMiddlewares")
 const {
   CreateCandiatureRH,getAllFormCandidatureRh, SearchFormCandidatureRh, DeleteCandidatureRh
 } = require("../controllers/CandidatureRhControllers");
@@ -24,15 +24,15 @@ CandidatureRhRouter.post("/", upload.single("cv"), CreateCandiatureRH);
 
 // get all Form candidature Rh (cv)
 
-CandidatureRhRouter.get("/",verifyToken,getAllFormCandidatureRh)
+CandidatureRhRouter.get("/",verifyTokenBackoffice,getAllFormCandidatureRh)
 
 // Search Form candidature  Rh 
 
-CandidatureRhRouter.get("/search",verifyToken ,SearchFormCandidatureRh)
+CandidatureRhRouter.get("/search",verifyTokenBackoffice ,SearchFormCandidatureRh)
 
 // Delete Form candidature Rh (cv)
 
-CandidatureRhRouter.delete("/:id",verifyToken, DeleteCandidatureRh)
+CandidatureRhRouter.delete("/:id",verifyTokenBackoffice, DeleteCandidatureRh)
 
 
 module.exports = CandidatureRhRouter;

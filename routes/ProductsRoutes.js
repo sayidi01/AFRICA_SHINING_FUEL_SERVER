@@ -2,7 +2,7 @@ const express = require("express");
 
 const ProductsRouter = express.Router();
 
-const { verifyToken } = require("../middlewares/authMiddlewares");
+const { verifyTokenBackoffice } = require("../middlewares/authMiddlewares");
 
 const {
   CreateProduct,
@@ -16,29 +16,29 @@ const {
 
 // Create new Product
 
-ProductsRouter.post("/", verifyToken, CreateProduct);
+ProductsRouter.post("/", verifyTokenBackoffice, CreateProduct);
 
 
 // Search Product ASF 
 
-ProductsRouter.get("/search",verifyToken, SearchProductASF)
+ProductsRouter.get("/search",verifyTokenBackoffice, SearchProductASF)
 
 // get Product ASF
 
-ProductsRouter.get("/", getProducts);
+ProductsRouter.get("/",verifyTokenBackoffice, getProducts);
 
 // get Product ASF by ID
 
-ProductsRouter.get("/:id", verifyToken, getProductsById);
+ProductsRouter.get("/:id", verifyTokenBackoffice, getProductsById);
 
 
 // Delete product  ASF
 
-ProductsRouter.delete("/:id", verifyToken, DeleteProduct)
+ProductsRouter.delete("/:id", verifyTokenBackoffice, DeleteProduct)
 
 // Edit Product ASF
 
-ProductsRouter.put("/:id", verifyToken, EditProductASF)
+ProductsRouter.put("/:id", verifyTokenBackoffice, EditProductASF)
 
 
 

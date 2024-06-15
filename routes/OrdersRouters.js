@@ -2,7 +2,7 @@ const express = require("express");
 
 const OrdersRouter = express.Router();
 
-const { verifyToken } = require("../middlewares/authMiddlewares");
+const { verifyToken , verifyTokenBackoffice} = require("../middlewares/authMiddlewares");
 
 const {
   createOrder,
@@ -20,7 +20,7 @@ OrdersRouter.post("/", verifyToken, createOrder);
 
 // get All Orders
 
-OrdersRouter.get("/", verifyToken, getAllOrders);
+OrdersRouter.get("/", verifyTokenBackoffice, getAllOrders);
 
 // get order customer connected
 
@@ -29,11 +29,11 @@ OrdersRouter.get("/bycustomer", verifyToken, getOrdersCustomerConnected);
 
 // Search Orders Customers 
 
-OrdersRouter.get("/search",verifyToken, searchOrders);
+OrdersRouter.get("/search",verifyTokenBackoffice, searchOrders);
 
 // get order by ID
 
-OrdersRouter.get("/:id", verifyToken, getOrderByID);
+OrdersRouter.get("/:id", verifyTokenBackoffice, getOrderByID);
 
 // update order
 
@@ -41,7 +41,7 @@ OrdersRouter.put("/:id", verifyToken, updateOrder);
 
 // delete order
 
-OrdersRouter.delete("/:id", verifyToken, deleteOrder);
+OrdersRouter.delete("/:id", verifyTokenBackoffice, deleteOrder);
 
 
 module.exports = OrdersRouter;

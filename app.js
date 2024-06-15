@@ -145,6 +145,7 @@ passport.use(
 // Local strategy Users
 
 passport.use(
+  "admins-only",
   new LocalStrategy(
     {
       usernameField: "email",
@@ -153,10 +154,11 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await Users.findOne({ email });
+        console.log("finding user - ", user);
         if (!user) {
           return done(null, false, { message: "Invalid email or password" });
         }
-        const isValid = await bcrypt.compare(password, user.password);
+        const isValid = password === user.password;
         if (!isValid) {
           return done(null, false, { message: "Invalid email or password" });
         }
@@ -169,13 +171,45 @@ passport.use(
 );
 
 passport.serializeUser((Customer, done) => {
-  done(null, Customer.id);
+  done(null, Customer);
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (customer, done) => {
+  console.log("Customer", customer)
   try {
-    const customer = await CustomersClientGazoil.findById(id);
-    done(null, customer);
+    // customerType:
+    // ClientGazoil, ClientFuelOil2, ClientBoisChauffage, undefined
+    const customerType = customer.customerType;
+    if (!customer.customerType) {
+      // he's an user (admin, manager)
+      const user = Users.findById(customer._id);
+      done(null, user);
+      return;
+    }
+
+    switch (customerType) {
+      case "ClientGazoil":
+        const customerClientGazoil = await CustomersClientGazoil.findById(customer._id);
+        done(null, customerClientGazoil);
+        break;
+        
+      case "ClientGazoil":
+        const customerClientFuel = await CustomersClientFuelOil2.findById(customer._id);
+        done(null, customerClientFuel);
+        break;
+        
+      case "ClientBoisChauffage":
+        const customerClientBoisChauffage = await CustomersClientBoisChauffage.findById(customer._id);
+        done(null, customerClientBoisChauffage);
+        break;
+    
+      default:
+        done(null, false);
+        break;
+
+      }
+      return;
+
   } catch (err) {
     done(err);
   }

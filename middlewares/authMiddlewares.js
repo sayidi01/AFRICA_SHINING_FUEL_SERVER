@@ -9,7 +9,7 @@ const CustomersClientFuelOil2 = require("../models/CustomersFuelOil2");
 
 const CustomersClientBoisChauffage = require("../models/CustomersBoisChauffage.js");
 
-const Users = require("../controllers/UsersControllers")
+const Users = require("../models/Users.js")
 
 const secretKeyRf = "smkmo99yamudiwehgdbi";
 
@@ -50,7 +50,7 @@ const authsignCustomer = (req, res, next) => {
 
 
 const authSignUser = (req, res, next) => {
-  passport.authenticate("only-customer", (err, user, info) => {
+  passport.authenticate("admins-only", (err, user, info) => {
     if (err) {
       return next(err);
     }
@@ -58,7 +58,7 @@ const authSignUser = (req, res, next) => {
     // Succ
     if (user) {
       req.data = user;
-      req.user = user;
+      req.backofficeUser = user;
       return next();
     } else {
       // Info
@@ -107,24 +107,24 @@ const generatedToken = (req, res, next) => {
 // Generated Token User ASF 
 
 const generatedTokenUserBackoffice = (req, res, next) => {
-  if (req.user) {
-    console.log("token data user", req.user);
-    const accesTokenBackoffice = jwt.sign(
-      { _id: req.user._doc._id, type: req.user._doc.customerType },
+  if (req.backofficeUser) {
+    console.log("token data user", req.backofficeUser);
+    const accessTokenBackoffice = jwt.sign(
+      { _id: req.backofficeUser._doc._id,  },
       process.env.secret,
       {
         expiresIn: "1d",
       }
     );
 
-    const refreshTokenBackoffice = jwt.sign({ _id: req.user._doc._id, type: req.user._doc.customerType }, secretKeyRf, {
+    const refreshTokenBackoffice = jwt.sign({ _id: req.backofficeUser._doc._id, }, secretKeyRf, {
       expiresIn: "1d",
     });
 
-    req.accesTokenBackoffice = accesTokenBackoffice;
+    req.accessTokenBackoffice = accessTokenBackoffice;
     req.refreshTokenBackoffice = refreshTokenBackoffice;
 
-    res.cookie("accessTokenBackoffice", accesTokenBackoffice, {
+    res.cookie("accessTokenBackoffice", accessTokenBackoffice, {
       samehttponly: true,
       sameSite: "None",
       secure: true,
@@ -174,6 +174,29 @@ const refreshToken = async (req, res) => {
     secure: true,
   });
   req.user = customer;
+  req.customer = customer;
+};
+
+const refreshTokenBackOffice = async (req, res) => {
+  const token = req.cookies.accessTokenBackoffice;
+  if (!token)
+    throw new Error("Session expired, login again (token not found)!");
+
+  const secret = process.env.secret;
+  if (!secret) throw new Error("Server error, failed to load token config");
+
+  const decoded = jwt.verify(token, secretKeyRf);
+  let user = Users.findById(decoded._id);
+
+  const newAccessToken = jwt.sign({ _id: user._id }, secret);
+  console.log("newAccessToken", newAccessToken);
+  res.cookie("accessTokenBackoffice", newAccessToken, {
+    samehttponly: true,
+    sameSite: "None",
+    secure: true,
+  });
+  req.user = user;
+  req.backofficeUser = user;
   req.customer = customer;
 };
 
@@ -232,7 +255,6 @@ const verifyToken = async (req, res, next) => {
 
 
 // Verify Toekn User ASF backoffice
-
 const verifyTokenBackoffice = async (req, res, next) => {
   const token = req.cookies.accessTokenBackoffice;
   console.log("req.cookies", req.cookies);
@@ -243,28 +265,33 @@ const verifyTokenBackoffice = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.secret);
-
-    // Decoded -- {_id: ""}
     console.log("Decoded --", decoded);
 
     let user;
 
     try {
+      console.log("Finding user with _id:", decoded._id);
       user = await Users.findById(decoded._id);
       console.log("user", user);
+
+      if (!user) {
+        console.log("User not found for _id:", decoded._id);
+        return res.status(401).json({ message: "User not found" });
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error finding user:", error);
       return res.status(401).json({ message: "Invalid token" });
     }
 
     req.user = user;
-    req.currentUser = user;
+    req.backofficeUser = user;
+    req.customer = user;
 
     next();
   } catch (error) {
     console.log("my error", error);
     try {
-      await refreshTokenBackoffice(req, res);
+      await refreshTokenBackOffice(req, res);
       console.log("Yes");
       next();
     } catch (error) {

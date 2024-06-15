@@ -3,7 +3,7 @@ const express = require("express");
 const DevisRouter = express.Router();
 
 const {CreateDevis, getAllDevis, deleteDevis, SearchDevis} = require("../controllers/DevisControllers");
-const { verifyToken } = require("../middlewares/authMiddlewares");
+const { verifyTokenBackoffice } = require("../middlewares/authMiddlewares");
 
 // Create Devis Customer
 
@@ -12,16 +12,16 @@ DevisRouter.post("/",CreateDevis);
 
 // Get All Devis Customer 
 
-DevisRouter.get("/",verifyToken,getAllDevis)
+DevisRouter.get("/",verifyTokenBackoffice,getAllDevis)
 
 
 // Search devis customer 
 
-DevisRouter.get("/search",verifyToken,SearchDevis)
+DevisRouter.get("/search",verifyTokenBackoffice,SearchDevis)
 
 // Delete Devis 
 
-DevisRouter.delete("/:id",verifyToken, deleteDevis)
+DevisRouter.delete("/:id",verifyTokenBackoffice, deleteDevis)
 
 
 

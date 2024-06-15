@@ -7,6 +7,7 @@ const {
   authsignCustomer,
   generatedToken,
   verifyToken,
+  verifyTokenBackoffice
 } = require("../middlewares/authMiddlewares");
 
 const checkError = require("../middlewares/errorMiddlewares");
@@ -138,41 +139,41 @@ CustomersRouter.put(
 
 // Get All Customers Gasoil
 
-CustomersRouter.get("/ClientGazoil",verifyToken,GetAllCustomersGasoil)
+CustomersRouter.get("/ClientGazoil",verifyTokenBackoffice,GetAllCustomersGasoil)
 
 //  Get All Customers Fuel Oil n 2
 
 
-CustomersRouter.get("/ClientFuelOil2", verifyToken,GetAllCustomersFuelOiln2)
+CustomersRouter.get("/ClientFuelOil2",verifyTokenBackoffice,GetAllCustomersFuelOiln2)
 
 
 // Get  All Customers Bois chauffage
 
-CustomersRouter.get("/ClientBoisChauffage",verifyToken, GetAllCustomersBoisChauffage)
+CustomersRouter.get("/ClientBoisChauffage",verifyTokenBackoffice, GetAllCustomersBoisChauffage)
 
 // Delete Customer Gasoil 
 
-CustomersRouter.delete("/ClientGazoil/:id", verifyToken,deleteCustomerGasoil)
+CustomersRouter.delete("/ClientGazoil/:id",verifyTokenBackoffice,deleteCustomerGasoil)
 
 // Delete Customer Fuel Oil n 2
 
-CustomersRouter.delete("/ClientFuelOil2/:id", verifyToken,deleteCustomerFuelOil2)
+CustomersRouter.delete("/ClientFuelOil2/:id", verifyTokenBackoffice,deleteCustomerFuelOil2)
 
 // Delete Customer Bois Chauffage 
 
-CustomersRouter.delete("/ClientBoisChauffage/:id",verifyToken, deleteCustomerBoisChauffage)
+CustomersRouter.delete("/ClientBoisChauffage/:id",verifyTokenBackoffice, deleteCustomerBoisChauffage)
 
 // Search Customer  Gasoil
 
-CustomersRouter.get("/ClientGazoil/search",verifyToken,SearchCustomerGsoil)
+CustomersRouter.get("/ClientGazoil/search",verifyTokenBackoffice,SearchCustomerGsoil)
 
 // Search Customer Customer Fuel Oil n 2
 
-CustomersRouter.get("/ClientFuelOil2/search",verifyToken,SearchCustomerFuelOil2)
+CustomersRouter.get("/ClientFuelOil2/search",verifyTokenBackoffice,SearchCustomerFuelOil2)
 
 // Search Customer Bois Chauffage 
 
-CustomersRouter.get("/ClientBoisChauffage/search",verifyToken,SearchCustomerBoisChauffage)
+CustomersRouter.get("/ClientBoisChauffage/search",verifyTokenBackoffice,SearchCustomerBoisChauffage)
 
 
 module.exports = CustomersRouter;

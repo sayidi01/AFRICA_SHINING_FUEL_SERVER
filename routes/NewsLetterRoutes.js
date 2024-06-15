@@ -5,7 +5,7 @@ const NewsLetterRouter = express.Router()
 
 
 const {CreateNewsLetter, getallEmailNewsLetter, deleteNewsLetter, SearchNewsLetter} = require("../controllers/NewsLetterControllers");
-const { verifyToken } = require("../middlewares/authMiddlewares");
+const { verifyTokenBackoffice } = require("../middlewares/authMiddlewares");
 
 
 // Create NewsLetter email 
@@ -16,17 +16,17 @@ NewsLetterRouter.post("/", CreateNewsLetter);
 
 // get all email NewsLetter 
 
-NewsLetterRouter.get("/",verifyToken, getallEmailNewsLetter)
+NewsLetterRouter.get("/",verifyTokenBackoffice, getallEmailNewsLetter)
 
 
 // Delete NewsLetter email  Customer
 
-NewsLetterRouter.delete("/:id",verifyToken, deleteNewsLetter)
+NewsLetterRouter.delete("/:id",verifyTokenBackoffice, deleteNewsLetter)
 
 
 // Search  NewsLetter email  Customer
 
-NewsLetterRouter.get("/search",verifyToken, SearchNewsLetter);
+NewsLetterRouter.get("/search",verifyTokenBackoffice, SearchNewsLetter);
 
 
 

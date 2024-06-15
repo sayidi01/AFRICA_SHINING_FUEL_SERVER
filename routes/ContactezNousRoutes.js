@@ -4,7 +4,7 @@ const ContactezNousRouter = Router();
 
 
 const {CreateFormContactezNous,GetAllFormsContactezNous, deleteFormContactezNous, SearchFormContactezNous} = require("../controllers/ContactezNousControllers");
-const { verifyToken } = require("../middlewares/authMiddlewares");
+const { verifyTokenBackoffice } = require("../middlewares/authMiddlewares");
 
 
 
@@ -17,16 +17,16 @@ ContactezNousRouter.post("/", CreateFormContactezNous);
 // GET all Forms ContactezNous
 
 
-ContactezNousRouter.get("/",verifyToken, GetAllFormsContactezNous);
+ContactezNousRouter.get("/",verifyTokenBackoffice, GetAllFormsContactezNous);
 
 
 // Delete Form  ContactezNous 
 
-ContactezNousRouter.delete("/:id",verifyToken, deleteFormContactezNous);
+ContactezNousRouter.delete("/:id",verifyTokenBackoffice, deleteFormContactezNous);
 
 // Search Form  ContactezNous
 
-ContactezNousRouter.get("/search",verifyToken, SearchFormContactezNous);
+ContactezNousRouter.get("/search",verifyTokenBackoffice, SearchFormContactezNous);
 
 
 

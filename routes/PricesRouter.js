@@ -2,11 +2,11 @@ const express = require("express");
 const { getAllPrices,update } = require("../controllers/PriceController");
 
 const PriceRouter = express.Router();
-
+const { verifyTokenBackoffice} = require("../middlewares/authMiddlewares");
 
 
 // retrieve all prices 
-PriceRouter.get('/', getAllPrices);
+PriceRouter.get('/',verifyTokenBackoffice, getAllPrices);
 
 // update 
 
